@@ -1,0 +1,755 @@
+import React, { useState, useEffect } from 'react';
+import { Trophy, Star, RefreshCw, CheckCircle, XCircle, Award, Target, Zap, Crown, Gift } from 'lucide-react';
+
+const MathLearningApp = () => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [points, setPoints] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [experience, setExperience] = useState(0);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [feedback, setFeedback] = useState('');
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [gameComplete, setGameComplete] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [unlockedAchievements, setUnlockedAchievements] = useState([]);
+  const [showAchievement, setShowAchievement] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [timerActive, setTimerActive] = useState(false);
+  const [quickAnswerBonus, setQuickAnswerBonus] = useState(false);
+  const [answeredQuestions, setAnsweredQuestions] = useState(new Set());
+
+  // Timer effect
+  useEffect(() => {
+    let timer;
+    if (timerActive && timeLeft > 0 && !showFeedback) {
+      timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    } else if (timeLeft === 0 && !showFeedback) {
+      handleTimeout();
+    }
+    return () => clearTimeout(timer);
+  }, [timeLeft, timerActive, showFeedback]);
+
+  // Exact questions from the worksheet
+  const questions = [
+    {
+      id: 1,
+      category: 'rounding',
+      difficulty: 'medium',
+      question: 'Sugang memilih sekeping daripada kad-kad nombor di bawah. Nombor pada kad itu akan menjadi 70 000 apabila dibundarkan kepada puluh ribu terdekat. Kad nombor manakah yang Sugang pilih? (62 481, 78 016, 65 703, 77 245)',
+      answer: '65703',
+      options: ['62481', '78016', '65703', '77245'],
+      explanation: '65,703 apabila dibundarkan kepada puluh ribu terdekat menjadi 70,000'
+    },
+    {
+      id: 2,
+      category: 'subtraction',
+      difficulty: 'hard',
+      question: 'Gambar menunjukkan bacaan meter elektrik di sebuah kilang pada bulan April dan Mei. Kira beza antara dua bacaan meter itu.',
+      image: {
+        src: 'images/electricity-meter.png',
+        alt: 'Bacaan meter elektrik April dan Mei',
+        description: 'Meter elektrik April: 00865439 kWh, Meter elektrik Mei: 00931058 kWh'
+      },
+      answer: '65619',
+      options: ['65619', '65916', '66519', '65691'],
+      explanation: '931058 - 865439 = 65,619 kWh'
+    },
+    {
+      id: 3,
+      category: 'multiplication',
+      difficulty: 'medium',
+      question: 'Sebanyak 1 375 keping baucar telah diedarkan ke setiap sekolah. Hitung jumlah baucar yang diedarkan ke 25 buah sekolah.',
+      answer: '34375',
+      options: ['34375', '34750', '35000', '33750'],
+      explanation: '1,375 × 25 = 34,375 keping baucar'
+    },
+    {
+      id: 4,
+      category: 'word_problems',
+      difficulty: 'easy',
+      question: 'Berapakah bilangan kawan abang Liman di laman sosial?',
+      image: {
+        src: 'images/liman-punitha-dialog.png',
+        alt: 'Dialog antara Punitha dan Liman tentang kawan di laman sosial',
+        description: 'Punitha: "Kakak saya ada 14,801 orang kawan di laman sosial." Liman: "Abang saya ada 2,928 orang kawan lebih daripada kakak kamu."'
+      },
+      answer: '17729',
+      options: ['17729', '17792', '17927', '17279'],
+      explanation: '14,801 + 2,928 = 17,729 orang kawan'
+    },
+    {
+      id: 5,
+      category: 'word_problems',
+      difficulty: 'medium',
+      question: 'Sebuah syarikat produk kesihatan telah menjual sejumlah 34 780 produk pada bulan Januari, Februari dan Mac. Bilangan produk yang dijual pada bulan Januari dan Februari masing-masing ialah 15 432 dan 8 095. Hitung bilangan produk yang dijual pada bulan Mac.',
+      answer: '11253',
+      options: ['11253', '11352', '11235', '11325'],
+      explanation: '34,780 - 15,432 - 8,095 = 11,253 produk'
+    },
+    {
+      id: 6,
+      category: 'division',
+      difficulty: 'medium',
+      question: 'Pekerja bapa Nadia telah membakar 69 840 cucuk sate sejuk beku. 40 cucuk sate itu dimasukkan ke dalam setiap bekas. Berapakah bekas sate yang dihasilkan?',
+      image: {
+        src: 'images/satay-sticks.png',
+        alt: 'Gambar cucuk sate yang dibakar',
+        description: '69,840 cucuk sate akan dimasukkan ke dalam bekas, 40 cucuk setiap bekas'
+      },
+      answer: '1746',
+      options: ['1746', '1764', '1674', '1647'],
+      explanation: '69,840 ÷ 40 = 1,746 bekas'
+    },
+    {
+      id: 7,
+      category: 'word_problems',
+      difficulty: 'medium',
+      question: 'Seorang penjual menyediakan 2 600 keping wafel coklat. Sebanyak 900 keping wafel disumbangkan ke rumah anak yatim. Penjual itu menyediakan 1 480 keping wafel kacang pula. Kira bilangan wafel yang dihantar ke pusat penjagaan kanak-kanak.',
+      answer: '3180',
+      options: ['3180', '3080', '3280', '3108'],
+      explanation: '2,600 - 900 + 1,480 = 3,180 keping wafel'
+    },
+    {
+      id: 8,
+      category: 'word_problems',
+      difficulty: 'hard',
+      question: 'Bersempena dengan majlis berbuka puasa, Anis membeli 7 kotak kurma. Setiap kotak berisi 35 biji kurma. Ibu Anis membungkus semula 5 biji kurma ke dalam beberapa beg plastik kecil. Hitung bilangan beg plastik kecil yang dihasilkan.',
+      answer: '49',
+      options: ['49', '48', '50', '47'],
+      explanation: '7 × 35 = 245 biji kurma. 245 ÷ 5 = 49 beg plastik'
+    },
+    {
+      id: 9,
+      category: 'division',
+      difficulty: 'hard',
+      question: 'Sejumlah 84 720 naskhah surat khabar diedarkan sama banyak setiap hari dalam bulan April. Kira bilangan surat khabar yang diedarkan dalam seminggu.',
+      answer: '19768',
+      options: ['19768', '19876', '19687', '19786'],
+      explanation: '84,720 ÷ 30 hari = 2,824 sehari. 2,824 × 7 = 19,768 dalam seminggu'
+    },
+    {
+      id: 10,
+      category: 'rounding',
+      difficulty: 'easy',
+      question: 'Bersempena dengan Kempen Bumi Hijau, lebih kurang 20 000 pokok telah ditanam di beberapa buah taman rekreasi. Bilangan pokok itu telah dibundarkan kepada puluh ribu terdekat. Berikan satu nilai yang mungkin bagi bilangan pokok yang ditanam.',
+      answer: '18500',
+      options: ['18500', '24500', '14500', '25500'],
+      explanation: 'Nilai antara 15,000 hingga 24,999 akan dibundarkan kepada 20,000'
+    },
+    {
+      id: 11,
+      category: 'algebra',
+      difficulty: 'easy',
+      question: 'Siti membeli 12 kuntum bunga anggerik ungu dan y kuntum bunga anggerik putih. Jumlah bunga anggerik ungu dan putih ialah 36 kuntum. Apakah nilai y?',
+      answer: '24',
+      options: ['24', '22', '26', '25'],
+      explanation: '12 + y = 36, jadi y = 36 - 12 = 24'
+    },
+    {
+      id: 12,
+      category: 'algebra',
+      difficulty: 'easy',
+      question: 'Sebuah blok pangsapuri ada sejumlah 90 unit rumah. p unit rumah telah didiami. 15 unit rumah pula belum didiami. Tentukan nilai p.',
+      answer: '75',
+      options: ['75', '65', '80', '70'],
+      explanation: 'p + 15 = 90, jadi p = 90 - 15 = 75'
+    },
+    {
+      id: 13,
+      category: 'algebra',
+      difficulty: 'medium',
+      question: 'Jadual menunjukkan bilangan itik di dalam empat buah sangkar. Jumlah itik di dalam sangkar R dan S adalah sama dengan jumlah itik di dalam sangkar T dan U. Hitung nilai k.',
+      image: {
+        description: 'Jadual: Sangkar R=14, S=15, T=17, U=k',
+        table: [
+          ['Sangkar', 'R', 'S', 'T', 'U'],
+          ['Bilangan itik', '14', '15', '17', 'k']
+        ],
+        alt: 'Jadual bilangan itik dalam sangkar'
+      },
+      answer: '12',
+      options: ['12', '10', '14', '11'],
+      explanation: '14 + 15 = 29, jadi 17 + k = 29. k = 29 - 17 = 12'
+    },
+    {
+      id: 14,
+      category: 'ordering',
+      difficulty: 'medium',
+      question: 'Susun nombor-nombor dalam tertib menurun: 43 096, 43 069, 43 960, 43 609. Pilih susunan yang betul.',
+      answer: '43960,43609,43096,43069',
+      options: ['43960,43609,43096,43069', '43069,43096,43609,43960', '43096,43069,43960,43609', '43609,43960,43096,43069'],
+      explanation: 'Tertib menurun: 43,960, 43,609, 43,096, 43,069'
+    },
+    {
+      id: 15,
+      category: 'place_value',
+      difficulty: 'easy',
+      question: 'Nyatakan nilai tempat bagi 9 dalam nombor 92 105.',
+      answer: 'puluh ribu',
+      options: ['puluh ribu', 'ribu', 'ratus', 'puluh'],
+      explanation: 'Dalam 92,105, digit 9 berada di tempat puluh ribu'
+    },
+    {
+      id: 16,
+      category: 'patterns',
+      difficulty: 'easy',
+      question: '24 509, 25 509, 26 509, ... Apakah nombor yang keempat?',
+      answer: '27509',
+      options: ['27509', '27590', '28509', '27059'],
+      explanation: 'Pola: tambah 1000. Jadi 26,509 + 1000 = 27,509'
+    },
+    {
+      id: 17,
+      category: 'operations',
+      difficulty: 'medium',
+      question: 'Hitung: 72 ÷ 12 × 15',
+      answer: '90',
+      options: ['90', '36', '180', '60'],
+      explanation: '72 ÷ 12 = 6, kemudian 6 × 15 = 90'
+    },
+    {
+      id: 18,
+      category: 'addition',
+      difficulty: 'easy',
+      question: 'Hitung jumlah bagi 48 925 dan 37 106.',
+      answer: '86031',
+      options: ['86031', '86130', '86013', '86301'],
+      explanation: '48,925 + 37,106 = 86,031'
+    },
+    {
+      id: 19,
+      category: 'rounding',
+      difficulty: 'easy',
+      question: 'Bundarkan 59 720 kepada puluh ribu terdekat.',
+      answer: '60000',
+      options: ['60000', '50000', '59000', '70000'],
+      explanation: '59,720 lebih dekat kepada 60,000 daripada 50,000'
+    },
+    {
+      id: 20,
+      category: 'algebra',
+      difficulty: 'easy',
+      question: 'Eng Ban ada 70 keping setem. Dia mempunyai m keping setem Malaysia dan 18 keping setem luar negara. Apakah nilai bagi m?',
+      answer: '52',
+      options: ['52', '48', '58', '62'],
+      explanation: 'm + 18 = 70, jadi m = 70 - 18 = 52'
+    }
+  ];
+
+  const categories = {
+    all: 'Semua Soalan',
+    rounding: 'Pembundaran',
+    word_problems: 'Masalah Kata',
+    operations: 'Operasi',
+    division: 'Pembahagian',
+    algebra: 'Algebra',
+    multiplication: 'Pendaraban',
+    subtraction: 'Penolakan',
+    addition: 'Penambahan',
+    ordering: 'Susunan Nombor',
+    place_value: 'Nilai Tempat',
+    patterns: 'Pola Nombor'
+  };
+
+  const achievements = [
+    { id: 'first_correct', name: 'Permulaan Hebat!', description: 'Jawab soalan pertama dengan betul', icon: '🌟', requirement: 1 },
+    { id: 'streak_3', name: 'Dalam Rentak!', description: 'Jawab 3 soalan berturut-turut dengan betul', icon: '🔥', requirement: 3 },
+    { id: 'streak_5', name: 'Hebat Sungguh!', description: 'Jawab 5 soalan berturut-turut dengan betul', icon: '⚡', requirement: 5 },
+    { id: 'quick_thinker', name: 'Pemikir Pantas!', description: 'Jawab dalam 10 saat', icon: '💨', requirement: 1 },
+    { id: 'level_2', name: 'Naik Tahap!', description: 'Capai tahap 2', icon: '🎯', requirement: 2 },
+    { id: 'level_3', name: 'Pakar Matematik!', description: 'Capai tahap 3', icon: '👑', requirement: 3 },
+    { id: 'perfect_score', name: 'Sempurna!', description: 'Dapatkan 100% markah', icon: '🏆', requirement: 100 },
+    { id: 'high_scorer', name: 'Pencapai Tinggi!', description: 'Kumpul 500+ mata', icon: '💎', requirement: 500 }
+  ];
+
+  const filteredQuestions = selectedCategory === 'all' 
+    ? questions 
+    : questions.filter(q => q.category === selectedCategory);
+
+  const currentQ = filteredQuestions[currentQuestion];
+
+  const calculatePoints = (difficulty, timeLeft, isCorrect) => {
+    if (!isCorrect) return 0;
+    
+    let basePoints = 0;
+    switch (difficulty) {
+      case 'easy': basePoints = 10; break;
+      case 'medium': basePoints = 20; break;
+      case 'hard': basePoints = 30; break;
+      default: basePoints = 15;
+    }
+    
+    // Time bonus
+    let timeBonus = timeLeft > 20 ? 10 : timeLeft > 10 ? 5 : 0;
+    
+    // Streak multiplier
+    let streakMultiplier = Math.min(streak + 1, 3);
+    
+    return Math.round((basePoints + timeBonus) * streakMultiplier);
+  };
+
+  const updateLevel = (newPoints) => {
+    const newExperience = experience + newPoints;
+    const newLevel = Math.floor(newExperience / 100) + 1;
+    
+    if (newLevel > level) {
+      checkAchievements('level', newLevel);
+    }
+    
+    setExperience(newExperience);
+    setLevel(newLevel);
+  };
+
+  const checkAchievements = (type, value) => {
+    const newAchievements = [];
+    
+    switch (type) {
+      case 'first_correct':
+        if (score === 0 && !unlockedAchievements.includes('first_correct')) {
+          newAchievements.push('first_correct');
+        }
+        break;
+      case 'streak':
+        if (value >= 3 && !unlockedAchievements.includes('streak_3')) newAchievements.push('streak_3');
+        if (value >= 5 && !unlockedAchievements.includes('streak_5')) newAchievements.push('streak_5');
+        break;
+      case 'quick_answer':
+        if (timeLeft > 20 && !unlockedAchievements.includes('quick_thinker')) {
+          newAchievements.push('quick_thinker');
+        }
+        break;
+      case 'level':
+        if (value >= 2 && !unlockedAchievements.includes('level_2')) newAchievements.push('level_2');
+        if (value >= 3 && !unlockedAchievements.includes('level_3')) newAchievements.push('level_3');
+        break;
+      case 'points':
+        if (value >= 500 && !unlockedAchievements.includes('high_scorer')) {
+          newAchievements.push('high_scorer');
+        }
+        break;
+      case 'perfect':
+        if (!unlockedAchievements.includes('perfect_score')) {
+          newAchievements.push('perfect_score');
+        }
+        break;
+    }
+    
+    if (newAchievements.length > 0) {
+      setUnlockedAchievements(prev => [...prev, ...newAchievements]);
+      setShowAchievement(newAchievements[0]);
+      setTimeout(() => setShowAchievement(null), 3000);
+    }
+  };
+
+  const handleAnswer = (selectedAnswer) => {
+    if (showFeedback) return;
+    
+    setUserAnswer(selectedAnswer);
+    setTimerActive(false);
+    const isCorrect = selectedAnswer === currentQ.answer;
+    const earnedPoints = calculatePoints(currentQ.difficulty, timeLeft, isCorrect);
+    
+    if (isCorrect) {
+      const newScore = score + 1;
+      const newStreak = streak + 1;
+      const newPoints = points + earnedPoints;
+      
+      setScore(newScore);
+      setStreak(newStreak);
+      setPoints(newPoints);
+      setBestStreak(Math.max(bestStreak, newStreak));
+      setAnsweredQuestions(prev => new Set([...prev, currentQ.id]));
+      
+      updateLevel(earnedPoints);
+      
+      // Check achievements
+      if (newScore === 1) checkAchievements('first_correct');
+      checkAchievements('streak', newStreak);
+      if (timeLeft > 20) checkAchievements('quick_answer');
+      checkAchievements('points', newPoints);
+      
+      setQuickAnswerBonus(timeLeft > 20);
+      setFeedback(`Betul! +${earnedPoints} mata! 🎉 ${timeLeft > 20 ? '⚡ Bonus Pantas!' : ''}`);
+    } else {
+      setStreak(0);
+      setFeedback(`Tidak betul. Jawapan yang betul: ${currentQ.answer}. ${currentQ.explanation}`);
+    }
+    
+    setShowFeedback(true);
+    
+    // Check for perfect score when it's the last question
+    if (currentQuestion === filteredQuestions.length - 1 && isCorrect && score + 1 === filteredQuestions.length) {
+      checkAchievements('perfect');
+    }
+  };
+
+  const handleTimeout = () => {
+    setTimerActive(false);
+    // Don't reveal answer or break streak - just stop the timer
+    // Player must still choose to answer or skip
+  };
+
+  const handleNext = () => {
+    if (currentQuestion < filteredQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setShowFeedback(false);
+      setUserAnswer('');
+      setFeedback('');
+      setTimeLeft(30);
+      setTimerActive(true);
+      setQuickAnswerBonus(false);
+    } else {
+      setGameComplete(true);
+    }
+  };
+
+  const handleSkip = () => {
+    setStreak(0);
+    setTimerActive(false);
+    setFeedback(`Soalan dilangkau. Jawapan yang betul: ${currentQ.answer}. ${currentQ.explanation}`);
+    setShowFeedback(true);
+  };
+
+  const resetGame = () => {
+    setCurrentQuestion(0);
+    setScore(0);
+    setPoints(0);
+    setStreak(0);
+    setLevel(1);
+    setExperience(0);
+    setUserAnswer('');
+    setFeedback('');
+    setShowFeedback(false);
+    setGameComplete(false);
+    setTimeLeft(30);
+    setTimerActive(true);
+    setQuickAnswerBonus(false);
+    setAnsweredQuestions(new Set());
+  };
+
+  const startGame = () => {
+    resetGame();
+    setTimerActive(true);
+  };
+
+  // Start timer when component mounts
+  useEffect(() => {
+    if (!gameComplete && !showFeedback) {
+      setTimerActive(true);
+    }
+  }, [currentQuestion]);
+
+  const getScoreMessage = () => {
+    const percentage = (score / filteredQuestions.length) * 100;
+    if (percentage === 100) return 'SEMPURNA! Genius Matematik! 🧠👑';
+    if (percentage >= 90) return 'Cemerlang Sekali! 🌟🏆';
+    if (percentage >= 80) return 'Cemerlang! 🌟';
+    if (percentage >= 70) return 'Bagus Sekali! 👍✨';
+    if (percentage >= 60) return 'Bagus! 👍';
+    if (percentage >= 50) return 'Boleh Tahan! 💪';
+    return 'Cuba Lagi! Jangan Putus Asa! 🤗';
+  };
+
+  if (gameComplete) {
+    return (
+      <div className="max-w-3xl mx-auto p-6 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl">
+        <div className="text-center">
+          <Trophy className="w-24 h-24 mx-auto text-yellow-500 mb-4" />
+          <h2 className="text-4xl font-bold text-purple-800 mb-4">Tahniah!</h2>
+          
+          <div className="bg-white rounded-xl p-6 mb-6 shadow-lg">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-blue-600">{score}/{filteredQuestions.length}</p>
+                <p className="text-sm text-gray-600">Soalan Betul</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-green-600">{points}</p>
+                <p className="text-sm text-gray-600">Mata Dikumpul</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-orange-600">{bestStreak}</p>
+                <p className="text-sm text-gray-600">Berturut Terbaik</p>
+              </div>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-purple-600">{level}</p>
+                <p className="text-sm text-gray-600">Tahap Dicapai</p>
+              </div>
+            </div>
+            
+            <p className="text-lg mb-2">Peratusan: {Math.round((score / filteredQuestions.length) * 100)}%</p>
+            <p className="text-2xl font-bold text-green-600">{getScoreMessage()}</p>
+            
+            {unlockedAchievements.length > 0 && (
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold mb-2">Pencapaian Dibuka 🏆</h3>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {unlockedAchievements.map(achievementId => {
+                    const achievement = achievements.find(a => a.id === achievementId);
+                    return achievement ? (
+                      <span key={achievementId} className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">
+                        {achievement.icon} {achievement.name}
+                      </span>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <button
+            onClick={startGame}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl text-xl font-semibold flex items-center gap-3 mx-auto transform hover:scale-105 transition-all"
+          >
+            <RefreshCw className="w-6 h-6" />
+            Main Lagi
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-blue-100 to-green-100 rounded-xl">
+      {/* Achievement Popup */}
+      {showAchievement && (
+        <div className="fixed top-4 right-4 bg-yellow-400 text-yellow-900 px-6 py-4 rounded-xl shadow-lg z-50 animate-bounce">
+          <div className="flex items-center gap-3">
+            <Award className="w-8 h-8" />
+            <div>
+              <p className="font-bold">Pencapaian Baru!</p>
+              <p className="text-sm">
+                {achievements.find(a => a.id === showAchievement)?.icon} {achievements.find(a => a.id === showAchievement)?.name}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Header Stats */}
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-bold text-blue-800 mb-4">🧮 Nombor dan Operasi</h1>
+        
+        {/* Main Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+          <div className="bg-white rounded-lg px-3 py-2 shadow">
+            <p className="text-xs text-gray-600">Soalan</p>
+            <p className="text-lg font-bold text-blue-600">{currentQuestion + 1}/{filteredQuestions.length}</p>
+          </div>
+          <div className="bg-white rounded-lg px-3 py-2 shadow">
+            <p className="text-xs text-gray-600">Mata</p>
+            <p className="text-lg font-bold text-green-600 flex items-center justify-center gap-1">
+              <Star className="w-4 h-4" />
+              {points}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg px-3 py-2 shadow">
+            <p className="text-xs text-gray-600">Berturut</p>
+            <p className="text-lg font-bold text-orange-600 flex items-center justify-center gap-1">
+              <Zap className="w-4 h-4" />
+              {streak}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg px-3 py-2 shadow">
+            <p className="text-xs text-gray-600">Tahap</p>
+            <p className="text-lg font-bold text-purple-600 flex items-center justify-center gap-1">
+              <Crown className="w-4 h-4" />
+              {level}
+            </p>
+          </div>
+          <div className="bg-white rounded-lg px-3 py-2 shadow">
+            <p className="text-xs text-gray-600">Masa</p>
+            <p className={`text-lg font-bold ${timeLeft <= 10 ? 'text-red-600' : 'text-blue-600'}`}>
+              {timeLeft}s
+            </p>
+          </div>
+        </div>
+
+        {/* Experience Bar */}
+        <div className="bg-white rounded-lg p-3 mb-4 shadow">
+          <p className="text-sm text-gray-600 mb-1">Pengalaman: {experience} / {level * 100}</p>
+          <div className="w-full bg-gray-200 rounded-full h-3">
+            <div
+              className="bg-gradient-to-r from-purple-500 to-pink-500 h-3 rounded-full transition-all duration-500"
+              style={{ width: `${((experience % 100) / 100) * 100}%` }}
+            ></div>
+          </div>
+        </div>
+
+        {/* Category Filter */}
+        <select
+          value={selectedCategory}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            startGame();
+          }}
+          className="bg-white border rounded-lg px-4 py-2 mb-4 shadow"
+        >
+          {Object.entries(categories).map(([key, value]) => (
+            <option key={key} value={key}>{value}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Progress Bar */}
+      <div className="w-full bg-gray-200 rounded-full h-4 mb-6 shadow-inner">
+        <div
+          className="bg-gradient-to-r from-blue-500 to-green-500 h-4 rounded-full transition-all duration-500 flex items-center justify-center"
+          style={{ width: `${((currentQuestion + 1) / filteredQuestions.length) * 100}%` }}
+        >
+          <span className="text-white text-xs font-bold">
+            {Math.round(((currentQuestion + 1) / filteredQuestions.length) * 100)}%
+          </span>
+        </div>
+      </div>
+
+      {/* Timer Bar */}
+      <div className="w-full bg-gray-200 rounded-full h-2 mb-6 shadow-inner">
+        <div
+          className={`h-2 rounded-full transition-all duration-1000 ${
+            timeLeft > 20 ? 'bg-green-500' : timeLeft > 10 ? 'bg-yellow-500' : 'bg-red-500'
+          }`}
+          style={{ width: `${(timeLeft / 30) * 100}%` }}
+        ></div>
+      </div>
+
+      {/* Question */}
+      <div className="bg-white rounded-xl p-6 shadow-lg">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1">
+            <h2 className="text-lg font-semibold text-gray-800 leading-relaxed mb-4">
+              {currentQ.question}
+            </h2>
+            
+            {/* Display image/visual content if present */}
+            {currentQ.image && (
+              <div className="mb-4 p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                {currentQ.image.src ? (
+                  <div className="text-center">
+                    <img 
+                      src={currentQ.image.src} 
+                      alt={currentQ.image.alt}
+                      className="max-w-full h-auto mx-auto mb-3 rounded-lg shadow-md"
+                      style={{ maxHeight: '300px' }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'block';
+                      }}
+                    />
+                    <div className="bg-blue-100 p-4 rounded-lg" style={{ display: 'none' }}>
+                      <p className="text-blue-800 font-medium">{currentQ.image.description}</p>
+                    </div>
+                    <p className="text-sm text-gray-600 italic">{currentQ.image.alt}</p>
+                  </div>
+                ) : currentQ.image.table ? (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full border-collapse border border-gray-400 bg-white">
+                      {currentQ.image.table.map((row, rowIndex) => (
+                        <tr key={rowIndex} className={rowIndex === 0 ? 'bg-blue-100' : 'bg-white'}>
+                          {row.map((cell, cellIndex) => (
+                            <td key={cellIndex} className="border border-gray-400 px-4 py-2 text-center font-medium">
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </table>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <div className="bg-blue-100 p-4 rounded-lg mb-2">
+                      <p className="text-blue-800 font-medium">{currentQ.image.description}</p>
+                    </div>
+                    <p className="text-sm text-gray-600 italic">{currentQ.image.alt}</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          
+          <div className="ml-4 flex gap-2">
+            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+              currentQ.difficulty === 'easy' ? 'bg-green-100 text-green-800' :
+              currentQ.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+              'bg-red-100 text-red-800'
+            }`}>
+              {currentQ.difficulty === 'easy' ? 'Mudah' : 
+               currentQ.difficulty === 'medium' ? 'Sederhana' : 'Sukar'}
+            </span>
+            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+              {currentQ.difficulty === 'easy' ? '10' : 
+               currentQ.difficulty === 'medium' ? '20' : '30'} mata
+            </span>
+          </div>
+        </div>
+
+        {/* Answer Options */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {currentQ.options.map((option, index) => (
+            <button
+              key={index}
+              onClick={() => handleAnswer(option)}
+              disabled={showFeedback}
+              className={`p-4 rounded-lg text-left font-semibold transition-all duration-200 transform hover:scale-105 ${
+                showFeedback
+                  ? option === currentQ.answer
+                    ? 'bg-green-500 text-white shadow-lg'
+                    : option === userAnswer
+                    ? 'bg-red-500 text-white shadow-lg'
+                    : 'bg-gray-300 text-gray-500'
+                  : 'bg-blue-50 hover:bg-blue-100 text-blue-800 border-2 border-blue-200 hover:border-blue-300 hover:shadow-md'
+              }`}
+            >
+              <span className="text-sm opacity-70">Pilihan {['A', 'B', 'C', 'D'][index]}</span>
+              <div className="text-lg">{option}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Feedback */}
+        {showFeedback && (
+          <div className={`p-4 rounded-lg shadow-lg ${
+            userAnswer === currentQ.answer ? 'bg-green-100' : 'bg-red-100'
+          }`}>
+            <div className="flex items-start gap-3 mb-4">
+              {userAnswer === currentQ.answer ? (
+                <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+              ) : (
+                <XCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+              )}
+              <p className="text-gray-800 font-medium">{feedback}</p>
+            </div>
+            
+            {/* Next/Skip buttons */}
+            <div className="flex justify-center">
+              <button
+                onClick={handleNext}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transform hover:scale-105 transition-all"
+              >
+                {currentQuestion < filteredQuestions.length - 1 ? 'Seterusnya' : 'Selesai'}
+                <RefreshCw className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Skip button - only show when no feedback is shown */}
+        {!showFeedback && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={handleSkip}
+              className="bg-gray-400 hover:bg-gray-500 text-white px-6 py-2 rounded-lg font-medium flex items-center gap-2 transform hover:scale-105 transition-all"
+            >
+              {timeLeft === 0 ? 'Masa Habis - Langkau atau Jawab' : 'Langkau Soalan'}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MathLearningApp;
