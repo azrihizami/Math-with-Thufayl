@@ -38,7 +38,12 @@ const MathLearningApp = () => {
       id: 1,
       category: 'rounding',
       difficulty: 'medium',
-      question: 'Sugang memilih sekeping daripada kad-kad nombor di bawah. Nombor pada kad itu akan menjadi 70 000 apabila dibundarkan kepada puluh ribu terdekat. Kad nombor manakah yang Sugang pilih? (62 481, 78 016, 65 703, 77 245)',
+      question: 'Sugang memilih sekeping daripada kad-kad nombor di bawah. Nombor pada kad itu akan menjadi 70 000 apabila dibundarkan kepada puluh ribu terdekat. Kad nombor manakah yang Sugang pilih?',
+      image: {
+        src: 'images/sugang-number-cards.png',
+        alt: 'Empat kad nombor: 62,481 | 78,016 | 65,703 | 77,245',
+        description: 'Kad nombor: 62,481 | 78,016 | 65,703 | 77,245'
+      },
       answer: '65703',
       options: ['62481', '78016', '65703', '77245'],
       explanation: '65,703 apabila dibundarkan kepada puluh ribu terdekat menjadi 70,000'
@@ -117,6 +122,11 @@ const MathLearningApp = () => {
       category: 'word_problems',
       difficulty: 'hard',
       question: 'Bersempena dengan majlis berbuka puasa, Anis membeli 7 kotak kurma. Setiap kotak berisi 35 biji kurma. Ibu Anis membungkus semula 5 biji kurma ke dalam beberapa beg plastik kecil. Hitung bilangan beg plastik kecil yang dihasilkan.',
+      image: {
+        src: 'images/anis-date-boxes.png',
+        alt: 'Tujuh kotak kurma dan beg plastik kecil',
+        description: '7 kotak kurma (35 biji setiap kotak) dibungkus semula dalam beg plastik (5 biji setiap beg)'
+      },
       answer: '49',
       options: ['49', '48', '50', '47'],
       explanation: '7 × 35 = 245 biji kurma. 245 ÷ 5 = 49 beg plastik'
@@ -144,6 +154,11 @@ const MathLearningApp = () => {
       category: 'algebra',
       difficulty: 'easy',
       question: 'Siti membeli 12 kuntum bunga anggerik ungu dan y kuntum bunga anggerik putih. Jumlah bunga anggerik ungu dan putih ialah 36 kuntum. Apakah nilai y?',
+      image: {
+        src: 'images/siti-orchid-flowers.png',
+        alt: 'Bunga anggerik ungu dan putih',
+        description: '12 bunga anggerik ungu + y bunga anggerik putih = 36 bunga total'
+      },
       answer: '24',
       options: ['24', '22', '26', '25'],
       explanation: '12 + y = 36, jadi y = 36 - 12 = 24'
@@ -233,6 +248,11 @@ const MathLearningApp = () => {
       category: 'algebra',
       difficulty: 'easy',
       question: 'Eng Ban ada 70 keping setem. Dia mempunyai m keping setem Malaysia dan 18 keping setem luar negara. Apakah nilai bagi m?',
+      image: {
+        src: 'images/eng-ban-stamps.png',
+        alt: 'Koleksi setem Eng Ban',
+        description: '70 setem total: m setem Malaysia + 18 setem luar negara'
+      },
       answer: '52',
       options: ['52', '48', '58', '62'],
       explanation: 'm + 18 = 70, jadi m = 70 - 18 = 52'
