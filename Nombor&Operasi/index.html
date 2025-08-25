@@ -5,59 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nombor dan Operasi - Math Learning App</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #e3f2fd 0%, #e8f5e8 100%);
             min-height: 100vh;
+            padding: 20px;
         }
+        
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
         }
+        
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
+        
         .title {
             font-size: 2.5em;
             color: #1976d2;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
-        .stats {
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .main-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
+        
         .stat-box {
-            background: #f5f5f5;
+            background: white;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid #e3f2fd;
         }
+        
         .stat-number {
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: bold;
-            color: #2e7d32;
+            margin-bottom: 5px;
         }
+        
         .stat-label {
+            font-size: 0.85em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .experience-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .exp-label {
             font-size: 0.9em;
             color: #666;
+            margin-bottom: 8px;
         }
+        
+        .exp-bar {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .exp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #9c27b0, #e91e63);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .category-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .category-select {
+            padding: 12px 20px;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            background: white;
+            color: #1976d2;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-select:hover {
+            background: #1976d2;
+            color: white;
+        }
+        
+        .progress-section {
+            margin-bottom: 30px;
+        }
+        
         .progress-bar {
             width: 100%;
             height: 20px;
             background: #e0e0e0;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
+        
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #1976d2, #4caf50);
@@ -68,182 +148,586 @@
             justify-content: center;
             color: white;
             font-weight: bold;
+            font-size: 0.9em;
         }
+        
+        .timer-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .timer-fill {
+            height: 100%;
+            width: 100%;
+            transition: all 1s linear;
+            background: #4caf50;
+        }
+        
+        .timer-fill.warning {
+            background: #ff9800;
+        }
+        
+        .timer-fill.danger {
+            background: #f44336;
+            animation: pulse-timer 0.5s infinite alternate;
+        }
+        
+        @keyframes pulse-timer {
+            from { opacity: 1; }
+            to { opacity: 0.7; }
+        }
+        
         .question-card {
             background: #fafafa;
-            padding: 25px;
+            padding: 30px;
             border-radius: 15px;
             border: 2px solid #e0e0e0;
             margin-bottom: 20px;
+            position: relative;
         }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .question-content {
+            flex: 1;
+        }
+        
         .question-text {
             font-size: 1.2em;
             margin-bottom: 20px;
             color: #333;
             line-height: 1.6;
         }
+        
+        .image-container {
+            background: #f5f5f5;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .image-fallback {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            color: #1976d2;
+            font-weight: 500;
+        }
+        
+        .difficulty-badges {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-left: 20px;
+        }
+        
+        .difficulty-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .difficulty-easy { background: #e8f5e9; color: #2e7d32; }
+        .difficulty-medium { background: #fff3e0; color: #f57c00; }
+        .difficulty-hard { background: #ffebee; color: #c62828; }
+        
+        .points-badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
         .options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
+        
         .option-btn {
-            padding: 15px 20px;
+            padding: 20px;
             border: 2px solid #1976d2;
-            border-radius: 10px;
-            background: white;
+            border-radius: 12px;
+            background: #f8f9ff;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: left;
             font-size: 1em;
+            position: relative;
+            transform-origin: center;
         }
-        .option-btn:hover {
+        
+        .option-btn:hover:not(:disabled) {
             background: #e3f2fd;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(25, 118, 210, 0.15);
         }
+        
+        .option-label {
+            font-size: 0.8em;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        
+        .option-text {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        
         .option-btn.correct {
             background: #4caf50;
             color: white;
             border-color: #4caf50;
+            animation: correctPulse 0.6s ease-out;
         }
+        
         .option-btn.wrong {
             background: #f44336;
             color: white;
             border-color: #f44336;
+            animation: wrongShake 0.5s ease-out;
         }
-        .option-btn:disabled {
+        
+        .option-btn.disabled {
+            background: #f0f0f0;
+            color: #999;
+            border-color: #ddd;
             cursor: not-allowed;
-            opacity: 0.7;
         }
+        
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
         .feedback {
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             margin-top: 20px;
-            font-weight: bold;
+            border: 2px solid;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .feedback::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .feedback.show::before {
+            left: 100%;
+        }
+        
         .feedback.correct {
-            background: #e8f5e8;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
             color: #2e7d32;
-            border: 2px solid #4caf50;
+            border-color: #4caf50;
         }
+        
         .feedback.wrong {
-            background: #ffebee;
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
             color: #c62828;
-            border: 2px solid #f44336;
+            border-color: #f44336;
         }
+        
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .feedback-icon {
+            font-size: 1.5em;
+        }
+        
+        .feedback-explanation {
+            font-weight: normal;
+            line-height: 1.5;
+        }
+        
         .btn {
-            padding: 12px 24px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: bold;
             transition: all 0.3s ease;
-            margin: 5px;
+            margin: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+        
         .btn-primary {
-            background: #1976d2;
+            background: linear-gradient(135deg, #1976d2, #1565c0);
             color: white;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
         }
+        
         .btn-primary:hover {
-            background: #1565c0;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(25, 118, 210, 0.4);
         }
+        
         .btn-secondary {
-            background: #757575;
+            background: linear-gradient(135deg, #757575, #616161);
             color: white;
+            box-shadow: 0 4px 15px rgba(117, 117, 117, 0.3);
         }
+        
         .btn-secondary:hover {
-            background: #616161;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(117, 117, 117, 0.4);
         }
-        .timer {
+        
+        .timer-display {
             position: fixed;
             top: 20px;
             right: 20px;
             background: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             font-weight: bold;
             font-size: 1.2em;
+            border: 2px solid #e0e0e0;
+            z-index: 1000;
         }
-        .timer.warning {
+        
+        .timer-display.warning {
             background: #ff9800;
             color: white;
+            border-color: #ff9800;
+            animation: pulse 2s infinite;
         }
-        .timer.danger {
+        
+        .timer-display.danger {
             background: #f44336;
             color: white;
-            animation: pulse 1s infinite;
+            border-color: #f44336;
+            animation: urgentPulse 0.5s infinite;
         }
+        
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+        
+        @keyframes urgentPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-2deg); }
+            75% { transform: scale(1.1) rotate(2deg); }
+        }
+        
         .complete-screen {
             text-align: center;
             padding: 50px 20px;
         }
-        .trophy {
-            font-size: 4em;
+        
+        .trophy-animation {
+            font-size: 5em;
             margin-bottom: 20px;
+            animation: bounce 2s infinite;
         }
-        .final-score {
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+        
+        .final-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .final-stat {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .final-stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .final-stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .achievements-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #b8860b;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #ffd700;
+            animation: achievementGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes achievementGlow {
+            from { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6); }
+        }
+        
+        .achievement-icon {
             font-size: 2em;
-            margin-bottom: 30px;
-            color: #1976d2;
+            margin-bottom: 8px;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ffd700;
+            color: #b8860b;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            z-index: 1001;
+            animation: slideInBounce 0.6s ease-out;
+            border: 2px solid #ffed4e;
+        }
+        
+        @keyframes slideInBounce {
+            0% { transform: translateX(400px); opacity: 0; }
+            60% { transform: translateX(-20px); opacity: 1; }
+            100% { transform: translateX(0); }
+        }
+        
+        .achievement-popup-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: #1976d2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .data-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-weight: 500;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .data-table tr:hover {
+            background: #e3f2fd;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .main-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .timer-display {
+                position: relative;
+                margin-bottom: 20px;
+            }
+            
+            .difficulty-badges {
+                flex-direction: row;
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="timer" id="timer">⏰ 30s</div>
+    <div class="timer-display" id="timerDisplay">⏰ 30s</div>
     
     <div class="container">
         <div class="header">
             <h1 class="title">🧮 Nombor dan Operasi</h1>
-            <p>Permainan Matematik Interaktif</p>
+            <p class="subtitle">Permainan Matematik Interaktif - Berdasarkan Lembaran Kerja Sebenar</p>
         </div>
 
-        <div class="stats">
+        <div class="main-stats">
             <div class="stat-box">
-                <div class="stat-number" id="questionCounter">1/5</div>
+                <div class="stat-number" id="questionCounter" style="color: #1976d2;">1/20</div>
                 <div class="stat-label">Soalan</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number" id="scoreDisplay">0</div>
+                <div class="stat-number" id="scoreDisplay" style="color: #4caf50;">0</div>
                 <div class="stat-label">Skor</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number" id="pointsDisplay">0</div>
+                <div class="stat-number" id="pointsDisplay" style="color: #2e7d32;">0</div>
                 <div class="stat-label">Mata</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number" id="streakDisplay">0</div>
+                <div class="stat-number" id="streakDisplay" style="color: #ff9800;">0</div>
                 <div class="stat-label">Berturut</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="levelDisplay" style="color: #9c27b0;">1</div>
+                <div class="stat-label">Tahap</div>
             </div>
         </div>
 
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill">0%</div>
+        <div class="experience-bar">
+            <div class="exp-label" id="expLabel">Pengalaman: 0 / 100</div>
+            <div class="exp-bar">
+                <div class="exp-fill" id="expFill"></div>
+            </div>
+        </div>
+
+        <div class="category-selector">
+            <select class="category-select" id="categorySelect">
+                <option value="all">Semua Soalan</option>
+                <option value="rounding">Pembundaran</option>
+                <option value="word_problems">Masalah Kata</option>
+                <option value="operations">Operasi</option>
+                <option value="division">Pembahagian</option>
+                <option value="algebra">Algebra</option>
+                <option value="multiplication">Pendaraban</option>
+                <option value="subtraction">Penolakan</option>
+                <option value="addition">Penambahan</option>
+                <option value="ordering">Susunan Nombor</option>
+                <option value="place_value">Nilai Tempat</option>
+                <option value="patterns">Pola Nombor</option>
+            </select>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">5%</div>
+            </div>
+            <div class="timer-bar">
+                <div class="timer-fill" id="timerBar"></div>
+            </div>
         </div>
 
         <div id="gameArea">
             <div class="question-card">
-                <div class="question-text" id="questionText">
-                    Sugang memilih sekeping daripada kad-kad nombor di bawah. Nombor pada kad itu akan menjadi 70 000 apabila dibundarkan kepada puluh ribu terdekat. Kad nombor manakah yang Sugang pilih?
+                <div class="question-header">
+                    <div class="question-content">
+                        <div class="question-text" id="questionText">
+                            Loading question...
+                        </div>
+                        <div id="imageContainer"></div>
+                    </div>
+                    <div class="difficulty-badges">
+                        <div class="difficulty-badge" id="difficultyBadge">Sederhana</div>
+                        <div class="points-badge" id="pointsBadge">20 mata</div>
+                    </div>
                 </div>
                 
                 <div class="options" id="optionsContainer">
-                    <button class="option-btn" onclick="selectAnswer('62481')">A) 62,481</button>
-                    <button class="option-btn" onclick="selectAnswer('78016')">B) 78,016</button>
-                    <button class="option-btn" onclick="selectAnswer('65703')">C) 65,703</button>
-                    <button class="option-btn" onclick="selectAnswer('77245')">D) 77,245</button>
+                    <!-- Options will be populated by JavaScript -->
                 </div>
 
                 <div id="feedback" style="display: none;"></div>
                 
-                <div id="actionButtons" style="text-align: center; margin-top: 20px;">
+                <div class="action-buttons" id="actionButtons">
                     <button class="btn btn-secondary" onclick="skipQuestion()">Langkau Soalan</button>
                 </div>
             </div>
@@ -251,49 +735,283 @@
     </div>
 
     <script>
-        // Sample questions from your worksheet
+        // All 20 questions from the worksheet
         const questions = [
             {
-                question: "Sugang memilih sekeping daripada kad-kad nombor di bawah. Nombor pada kad itu akan menjadi 70 000 apabila dibundarkan kepada puluh ribu terdekat. Kad nombor manakah yang Sugang pilih?",
-                options: ["62,481", "78,016", "65,703", "77,245"],
-                correct: 2,
-                explanation: "65,703 apabila dibundarkan kepada puluh ribu terdekat menjadi 70,000"
+                id: 1,
+                category: 'rounding',
+                difficulty: 'medium',
+                question: 'Sugang memilih sekeping daripada kad-kad nombor di bawah. Nombor pada kad itu akan menjadi 70 000 apabila dibundarkan kepada puluh ribu terdekat. Kad nombor manakah yang Sugang pilih?',
+                image: {
+                    src: 'images/sugang-number-cards.png',
+                    alt: 'Empat kad nombor: 62,481 | 78,016 | 65,703 | 77,245',
+                    description: 'Kad nombor: 62,481 | 78,016 | 65,703 | 77,245'
+                },
+                answer: '65703',
+                options: ['62481', '78016', '65703', '77245'],
+                explanation: '65,703 apabila dibundarkan kepada puluh ribu terdekat menjadi 70,000'
             },
             {
-                question: "Kakak saya ada 14,801 orang kawan di laman sosial. Abang saya ada 2,928 orang kawan lebih daripada kakak kamu. Berapakah bilangan kawan abang Liman di laman sosial?",
-                options: ["17,729", "17,792", "17,927", "17,279"],
-                correct: 0,
-                explanation: "14,801 + 2,928 = 17,729 orang kawan"
+                id: 2,
+                category: 'subtraction',
+                difficulty: 'hard',
+                question: 'Gambar menunjukkan bacaan meter elektrik di sebuah kilang pada bulan April dan Mei. Kira beza antara dua bacaan meter itu.',
+                image: {
+                    src: 'images/electricity-meter.png',
+                    alt: 'Bacaan meter elektrik April dan Mei',
+                    description: 'Meter elektrik April: 00865439 kWh, Meter elektrik Mei: 00931058 kWh'
+                },
+                answer: '65619',
+                options: ['65619', '65916', '66519', '65691'],
+                explanation: '931058 - 865439 = 65,619 kWh'
             },
             {
-                question: "Sebanyak 1,375 keping baucar telah diedarkan ke setiap sekolah. Hitung jumlah baucar yang diedarkan ke 25 buah sekolah.",
-                options: ["34,375", "34,750", "35,000", "33,750"],
-                correct: 0,
-                explanation: "1,375 × 25 = 34,375 keping baucar"
+                id: 3,
+                category: 'multiplication',
+                difficulty: 'medium',
+                question: 'Sebanyak 1 375 keping baucar telah diedarkan ke setiap sekolah. Hitung jumlah baucar yang diedarkan ke 25 buah sekolah.',
+                answer: '34375',
+                options: ['34375', '34750', '35000', '33750'],
+                explanation: '1,375 × 25 = 34,375 keping baucar'
             },
             {
-                question: "Siti membeli 12 kuntum bunga anggerik ungu dan y kuntum bunga anggerik putih. Jumlah bunga anggerik ungu dan putih ialah 36 kuntum. Apakah nilai y?",
-                options: ["24", "22", "26", "25"],
-                correct: 0,
-                explanation: "12 + y = 36, jadi y = 36 - 12 = 24"
+                id: 4,
+                category: 'word_problems',
+                difficulty: 'easy',
+                question: 'Berapakah bilangan kawan abang Liman di laman sosial?',
+                image: {
+                    src: 'images/liman-punitha-dialog.png',
+                    alt: 'Dialog antara Punitha dan Liman tentang kawan di laman sosial',
+                    description: 'Punitha: "Kakak saya ada 14,801 orang kawan di laman sosial." Liman: "Abang saya ada 2,928 orang kawan lebih daripada kakak kamu."'
+                },
+                answer: '17729',
+                options: ['17729', '17792', '17927', '17279'],
+                explanation: '14,801 + 2,928 = 17,729 orang kawan'
             },
             {
-                question: "Bundarkan 59,720 kepada puluh ribu terdekat.",
-                options: ["60,000", "50,000", "59,000", "70,000"],
-                correct: 0,
-                explanation: "59,720 lebih dekat kepada 60,000 daripada 50,000"
+                id: 5,
+                category: 'word_problems',
+                difficulty: 'medium',
+                question: 'Sebuah syarikat produk kesihatan telah menjual sejumlah 34 780 produk pada bulan Januari, Februari dan Mac. Bilangan produk yang dijual pada bulan Januari dan Februari masing-masing ialah 15 432 dan 8 095. Hitung bilangan produk yang dijual pada bulan Mac.',
+                answer: '11253',
+                options: ['11253', '11352', '11235', '11325'],
+                explanation: '34,780 - 15,432 - 8,095 = 11,253 produk'
+            },
+            {
+                id: 6,
+                category: 'division',
+                difficulty: 'medium',
+                question: 'Pekerja bapa Nadia telah membakar 69 840 cucuk sate sejuk beku. 40 cucuk sate itu dimasukkan ke dalam setiap bekas. Berapakah bekas sate yang dihasilkan?',
+                image: {
+                    src: 'images/satay-sticks.png',
+                    alt: 'Gambar cucuk sate yang dibakar',
+                    description: '69,840 cucuk sate akan dimasukkan ke dalam bekas, 40 cucuk setiap bekas'
+                },
+                answer: '1746',
+                options: ['1746', '1764', '1674', '1647'],
+                explanation: '69,840 ÷ 40 = 1,746 bekas'
+            },
+            {
+                id: 7,
+                category: 'word_problems',
+                difficulty: 'medium',
+                question: 'Seorang penjual menyediakan 2 600 keping wafel coklat. Sebanyak 900 keping wafel disumbangkan ke rumah anak yatim. Penjual itu menyediakan 1 480 keping wafel kacang pula. Kira bilangan wafel yang dihantar ke pusat penjagaan kanak-kanak.',
+                answer: '3180',
+                options: ['3180', '3080', '3280', '3108'],
+                explanation: '2,600 - 900 + 1,480 = 3,180 keping wafel'
+            },
+            {
+                id: 8,
+                category: 'word_problems',
+                difficulty: 'hard',
+                question: 'Bersempena dengan majlis berbuka puasa, Anis membeli 7 kotak kurma. Setiap kotak berisi 35 biji kurma. Ibu Anis membungkus semula 5 biji kurma ke dalam beberapa beg plastik kecil. Hitung bilangan beg plastik kecil yang dihasilkan.',
+                image: {
+                    src: 'images/anis-date-boxes.png',
+                    alt: 'Tujuh kotak kurma dan beg plastik kecil',
+                    description: '7 kotak kurma (35 biji setiap kotak) dibungkus semula dalam beg plastik (5 biji setiap beg)'
+                },
+                answer: '49',
+                options: ['49', '48', '50', '47'],
+                explanation: '7 × 35 = 245 biji kurma. 245 ÷ 5 = 49 beg plastik'
+            },
+            {
+                id: 9,
+                category: 'division',
+                difficulty: 'hard',
+                question: 'Sejumlah 84 720 naskhah surat khabar diedarkan sama banyak setiap hari dalam bulan April. Kira bilangan surat khabar yang diedarkan dalam seminggu.',
+                answer: '19768',
+                options: ['19768', '19876', '19687', '19786'],
+                explanation: '84,720 ÷ 30 hari = 2,824 sehari. 2,824 × 7 = 19,768 dalam seminggu'
+            },
+            {
+                id: 10,
+                category: 'rounding',
+                difficulty: 'easy',
+                question: 'Bersempena dengan Kempen Bumi Hijau, lebih kurang 20 000 pokok telah ditanam di beberapa buah taman rekreasi. Bilangan pokok itu telah dibundarkan kepada puluh ribu terdekat. Berikan satu nilai yang mungkin bagi bilangan pokok yang ditanam.',
+                answer: '18500',
+                options: ['18500', '24500', '14500', '25500'],
+                explanation: 'Nilai antara 15,000 hingga 24,999 akan dibundarkan kepada 20,000'
+            },
+            {
+                id: 11,
+                category: 'algebra',
+                difficulty: 'easy',
+                question: 'Siti membeli 12 kuntum bunga anggerik ungu dan y kuntum bunga anggerik putih. Jumlah bunga anggerik ungu dan putih ialah 36 kuntum. Apakah nilai y?',
+                image: {
+                    src: 'images/siti-orchid-flowers.png',
+                    alt: 'Bunga anggerik ungu dan putih',
+                    description: '12 bunga anggerik ungu + y bunga anggerik putih = 36 bunga total'
+                },
+                answer: '24',
+                options: ['24', '22', '26', '25'],
+                explanation: '12 + y = 36, jadi y = 36 - 12 = 24'
+            },
+            {
+                id: 12,
+                category: 'algebra',
+                difficulty: 'easy',
+                question: 'Sebuah blok pangsapuri ada sejumlah 90 unit rumah. p unit rumah telah didiami. 15 unit rumah pula belum didiami. Tentukan nilai p.',
+                answer: '75',
+                options: ['75', '65', '80', '70'],
+                explanation: 'p + 15 = 90, jadi p = 90 - 15 = 75'
+            },
+            {
+                id: 13,
+                category: 'algebra',
+                difficulty: 'medium',
+                question: 'Jadual menunjukkan bilangan itik di dalam empat buah sangkar. Jumlah itik di dalam sangkar R dan S adalah sama dengan jumlah itik di dalam sangkar T dan U. Hitung nilai k.',
+                image: {
+                    description: 'Jadual: Sangkar R=14, S=15, T=17, U=k',
+                    table: [
+                        ['Sangkar', 'R', 'S', 'T', 'U'],
+                        ['Bilangan itik', '14', '15', '17', 'k']
+                    ],
+                    alt: 'Jadual bilangan itik dalam sangkar'
+                },
+                answer: '12',
+                options: ['12', '10', '14', '11'],
+                explanation: '14 + 15 = 29, jadi 17 + k = 29. k = 29 - 17 = 12'
+            },
+            {
+                id: 14,
+                category: 'ordering',
+                difficulty: 'medium',
+                question: 'Susun nombor-nombor dalam tertib menurun: 43 096, 43 069, 43 960, 43 609. Pilih susunan yang betul.',
+                answer: '43960,43609,43096,43069',
+                options: ['43960,43609,43096,43069', '43069,43096,43609,43960', '43096,43069,43960,43609', '43609,43960,43096,43069'],
+                explanation: 'Tertib menurun: 43,960, 43,609, 43,096, 43,069'
+            },
+            {
+                id: 15,
+                category: 'place_value',
+                difficulty: 'easy',
+                question: 'Nyatakan nilai tempat bagi 9 dalam nombor 92 105.',
+                answer: 'puluh ribu',
+                options: ['puluh ribu', 'ribu', 'ratus', 'puluh'],
+                explanation: 'Dalam 92,105, digit 9 berada di tempat puluh ribu'
+            },
+            {
+                id: 16,
+                category: 'patterns',
+                difficulty: 'easy',
+                question: '24 509, 25 509, 26 509, ... Apakah nombor yang keempat?',
+                answer: '27509',
+                options: ['27509', '27590', '28509', '27059'],
+                explanation: 'Pola: tambah 1000. Jadi 26,509 + 1000 = 27,509'
+            },
+            {
+                id: 17,
+                category: 'operations',
+                difficulty: 'medium',
+                question: 'Hitung: 72 ÷ 12 × 15',
+                answer: '90',
+                options: ['90', '36', '180', '60'],
+                explanation: '72 ÷ 12 = 6, kemudian 6 × 15 = 90'
+            },
+            {
+                id: 18,
+                category: 'addition',
+                difficulty: 'easy',
+                question: 'Hitung jumlah bagi 48 925 dan 37 106.',
+                answer: '86031',
+                options: ['86031', '86130', '86013', '86301'],
+                explanation: '48,925 + 37,106 = 86,031'
+            },
+            {
+                id: 19,
+                category: 'rounding',
+                difficulty: 'easy',
+                question: 'Bundarkan 59 720 kepada puluh ribu terdekat.',
+                answer: '60000',
+                options: ['60000', '50000', '59000', '70000'],
+                explanation: '59,720 lebih dekat kepada 60,000 daripada 50,000'
+            },
+            {
+                id: 20,
+                category: 'algebra',
+                difficulty: 'easy',
+                question: 'Eng Ban ada 70 keping setem. Dia mempunyai m keping setem Malaysia dan 18 keping setem luar negara. Apakah nilai bagi m?',
+                image: {
+                    src: 'images/eng-ban-stamps.png',
+                    alt: 'Koleksi setem Eng Ban',
+                    description: '70 setem total: m setem Malaysia + 18 setem luar negara'
+                },
+                answer: '52',
+                options: ['52', '48', '58', '62'],
+                explanation: 'm + 18 = 70, jadi m = 70 - 18 = 52'
             }
         ];
 
+        // Achievement definitions
+        const achievementDefinitions = [
+            { id: 'first_correct', name: 'Permulaan Hebat!', description: 'Jawab soalan pertama dengan betul', icon: '🌟' },
+            { id: 'streak_3', name: 'Dalam Rentak!', description: 'Jawab 3 soalan berturut-turut dengan betul', icon: '🔥' },
+            { id: 'streak_5', name: 'Hebat Sungguh!', description: 'Jawab 5 soalan berturut-turut dengan betul', icon: '⚡' },
+            { id: 'quick_thinker', name: 'Pemikir Pantas!', description: 'Jawab dalam 10 saat', icon: '💨' },
+            { id: 'level_2', name: 'Naik Tahap!', description: 'Capai tahap 2', icon: '🎯' },
+            { id: 'level_3', name: 'Pakar Matematik!', description: 'Capai tahap 3', icon: '👑' },
+            { id: 'perfect_score', name: 'Sempurna!', description: 'Dapatkan 100% markah', icon: '🏆' },
+            { id: 'high_scorer', name: 'Pencapai Tinggi!', description: 'Kumpul 500+ mata', icon: '💎' }
+        ];
+
+        // Game state
         let currentQuestion = 0;
         let score = 0;
         let points = 0;
         let streak = 0;
+        let bestStreak = 0;
+        let level = 1;
+        let experience = 0;
         let timeLeft = 30;
         let timerInterval;
         let gameActive = true;
+        let selectedCategory = 'all';
+        let unlockedAchievements = [];
+        let filteredQuestions = questions;
 
+        // Initialize game
+        function initGame() {
+            filterQuestions();
+            loadQuestion();
+            startTimer();
+            updateDisplays();
+        }
+
+        // Filter questions by category
+        function filterQuestions() {
+            if (selectedCategory === 'all') {
+                filteredQuestions = questions;
+            } else {
+                filteredQuestions = questions.filter(q => q.category === selectedCategory);
+            }
+        }
+
+        // Timer functions
         function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 30;
+            gameActive = true;
+            
             timerInterval = setInterval(() => {
                 timeLeft--;
                 updateTimerDisplay();
@@ -306,46 +1024,284 @@
         }
 
         function updateTimerDisplay() {
-            const timerEl = document.getElementById('timer');
-            timerEl.textContent = `⏰ ${timeLeft}s`;
+            const timerEl = document.getElementById('timerDisplay');
+            const timerBar = document.getElementById('timerBar');
             
-            if (timeLeft <= 10) {
-                timerEl.className = 'timer danger';
-            } else if (timeLeft <= 20) {
-                timerEl.className = 'timer warning';
+            timerEl.textContent = `⏰ ${timeLeft}s`;
+            timerBar.style.width = `${(timeLeft / 30) * 100}%`;
+            
+            if (timeLeft <= 5) {
+                timerEl.className = 'timer-display danger';
+                timerBar.className = 'timer-fill danger';
+            } else if (timeLeft <= 10) {
+                timerEl.className = 'timer-display warning';
+                timerBar.className = 'timer-fill warning';
             } else {
-                timerEl.className = 'timer';
+                timerEl.className = 'timer-display';
+                timerBar.className = 'timer-fill';
             }
         }
 
+        // Points calculation
+        function calculatePoints(difficulty, timeRemaining, isCorrect) {
+            if (!isCorrect) return 0;
+            
+            let basePoints = 0;
+            switch (difficulty) {
+                case 'easy': basePoints = 10; break;
+                case 'medium': basePoints = 20; break;
+                case 'hard': basePoints = 30; break;
+                default: basePoints = 15;
+            }
+            
+            let timeBonus = timeRemaining > 20 ? 10 : timeRemaining > 10 ? 5 : 0;
+            let streakMultiplier = Math.min(streak + 1, 3);
+            
+            return Math.round((basePoints + timeBonus) * streakMultiplier);
+        }
+
+        // Level and experience
+        function updateLevel(newPoints) {
+            const newExperience = experience + newPoints;
+            const newLevel = Math.floor(newExperience / 100) + 1;
+            
+            if (newLevel > level) {
+                checkAchievements('level', newLevel);
+                showLevelUp(newLevel);
+            }
+            
+            experience = newExperience;
+            level = newLevel;
+        }
+
+        function showLevelUp(newLevel) {
+            // Add level up animation
+            const levelEl = document.getElementById('levelDisplay');
+            levelEl.style.animation = 'bounce 1s ease-out';
+            setTimeout(() => {
+                levelEl.style.animation = '';
+            }, 1000);
+        }
+
+        // Achievement system
+        function checkAchievements(type, value) {
+            const newAchievements = [];
+            
+            switch (type) {
+                case 'first_correct':
+                    if (score === 0 && !unlockedAchievements.includes('first_correct')) {
+                        newAchievements.push('first_correct');
+                    }
+                    break;
+                case 'streak':
+                    if (value >= 3 && !unlockedAchievements.includes('streak_3')) newAchievements.push('streak_3');
+                    if (value >= 5 && !unlockedAchievements.includes('streak_5')) newAchievements.push('streak_5');
+                    break;
+                case 'quick_answer':
+                    if (timeLeft > 20 && !unlockedAchievements.includes('quick_thinker')) {
+                        newAchievements.push('quick_thinker');
+                    }
+                    break;
+                case 'level':
+                    if (value >= 2 && !unlockedAchievements.includes('level_2')) newAchievements.push('level_2');
+                    if (value >= 3 && !unlockedAchievements.includes('level_3')) newAchievements.push('level_3');
+                    break;
+                case 'points':
+                    if (value >= 500 && !unlockedAchievements.includes('high_scorer')) {
+                        newAchievements.push('high_scorer');
+                    }
+                    break;
+                case 'perfect':
+                    if (!unlockedAchievements.includes('perfect_score')) {
+                        newAchievements.push('perfect_score');
+                    }
+                    break;
+            }
+            
+            if (newAchievements.length > 0) {
+                unlockedAchievements.push(...newAchievements);
+                showAchievementPopup(newAchievements[0]);
+            }
+        }
+
+        function showAchievementPopup(achievementId) {
+            const achievement = achievementDefinitions.find(a => a.id === achievementId);
+            if (!achievement) return;
+
+            const popup = document.createElement('div');
+            popup.className = 'achievement-popup';
+            popup.innerHTML = `
+                <div class="achievement-popup-header">
+                    <span style="font-size: 2em;">🏆</span>
+                    <div>
+                        <div style="font-weight: bold;">Pencapaian Baru!</div>
+                        <div>${achievement.icon} ${achievement.name}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(popup);
+            
+            setTimeout(() => {
+                if (popup.parentNode) {
+                    popup.parentNode.removeChild(popup);
+                }
+            }, 3000);
+        }
+
+        // Question loading
+        function loadQuestion() {
+            if (currentQuestion >= filteredQuestions.length) {
+                showResults();
+                return;
+            }
+            
+            const currentQ = filteredQuestions[currentQuestion];
+            
+            // Update question display
+            document.getElementById('questionText').textContent = currentQ.question;
+            
+            // Update difficulty and points badges
+            const difficultyBadge = document.getElementById('difficultyBadge');
+            const pointsBadge = document.getElementById('pointsBadge');
+            
+            const difficultyText = {
+                'easy': 'Mudah',
+                'medium': 'Sederhana', 
+                'hard': 'Sukar'
+            };
+            
+            const pointsText = {
+                'easy': '10',
+                'medium': '20',
+                'hard': '30'
+            };
+            
+            difficultyBadge.textContent = difficultyText[currentQ.difficulty];
+            difficultyBadge.className = `difficulty-badge difficulty-${currentQ.difficulty}`;
+            pointsBadge.textContent = `${pointsText[currentQ.difficulty]} mata`;
+            
+            // Load image if present
+            loadQuestionImage(currentQ);
+            
+            // Update options
+            loadOptions(currentQ);
+            
+            // Reset feedback and buttons
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('actionButtons').innerHTML = 
+                '<button class="btn btn-secondary" onclick="skipQuestion()">Langkau Soalan</button>';
+            
+            // Start timer
+            startTimer();
+            updateDisplays();
+        }
+
+        function loadQuestionImage(question) {
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = '';
+            
+            if (question.image) {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'image-container';
+                
+                if (question.image.src) {
+                    // Try to load actual image
+                    const img = document.createElement('img');
+                    img.src = question.image.src;
+                    img.alt = question.image.alt;
+                    img.onerror = function() {
+                        // Fallback to description
+                        imageDiv.innerHTML = `<div class="image-fallback">${question.image.description}</div>`;
+                    };
+                    imageDiv.appendChild(img);
+                } else if (question.image.table) {
+                    // Create table
+                    const tableContainer = document.createElement('div');
+                    tableContainer.className = 'table-container';
+                    
+                    const table = document.createElement('table');
+                    table.className = 'data-table';
+                    
+                    question.image.table.forEach((row, rowIndex) => {
+                        const tr = document.createElement('tr');
+                        row.forEach(cell => {
+                            const element = rowIndex === 0 ? document.createElement('th') : document.createElement('td');
+                            element.textContent = cell;
+                            tr.appendChild(element);
+                        });
+                        table.appendChild(tr);
+                    });
+                    
+                    tableContainer.appendChild(table);
+                    imageDiv.appendChild(tableContainer);
+                } else {
+                    // Just description
+                    imageDiv.innerHTML = `<div class="image-fallback">${question.image.description}</div>`;
+                }
+                
+                container.appendChild(imageDiv);
+            }
+        }
+
+        function loadOptions(question) {
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `
+                    <div class="option-label">Pilihan ${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                btn.onclick = () => selectAnswer(option);
+                container.appendChild(btn);
+            });
+        }
+
+        // Answer selection
         function selectAnswer(answer) {
             if (!gameActive) return;
             
             clearInterval(timerInterval);
             gameActive = false;
             
-            const currentQ = questions[currentQuestion];
-            const selectedIndex = currentQ.options.indexOf(answer);
-            const isCorrect = selectedIndex === currentQ.correct;
+            const currentQ = filteredQuestions[currentQuestion];
+            const isCorrect = answer === currentQ.answer;
+            const earnedPoints = calculatePoints(currentQ.difficulty, timeLeft, isCorrect);
             
-            // Calculate points
-            let earnedPoints = 10;
-            if (timeLeft > 20) earnedPoints += 10; // Speed bonus
-            if (streak > 0) earnedPoints = Math.round(earnedPoints * 1.5); // Streak bonus
-            
-            // Update stats
             if (isCorrect) {
-                score++;
-                points += earnedPoints;
-                streak++;
+                const newScore = score + 1;
+                const newStreak = streak + 1;
+                const newPoints = points + earnedPoints;
+                
+                score = newScore;
+                streak = newStreak;
+                points = newPoints;
+                bestStreak = Math.max(bestStreak, newStreak);
+                
+                updateLevel(earnedPoints);
+                
+                // Check achievements
+                if (newScore === 1) checkAchievements('first_correct');
+                checkAchievements('streak', newStreak);
+                if (timeLeft > 20) checkAchievements('quick_answer');
+                checkAchievements('points', newPoints);
+                
+                showFeedback(true, earnedPoints, currentQ.explanation);
             } else {
                 streak = 0;
+                showFeedback(false, 0, `Jawapan yang betul: ${currentQ.answer}. ${currentQ.explanation}`);
             }
             
-            // Update displays
+            highlightAnswers(answer, isCorrect);
             updateDisplays();
-            showFeedback(isCorrect, currentQ.explanation, earnedPoints);
-            highlightAnswer(selectedIndex, isCorrect);
+            
+            // Check for perfect score
+            if (currentQuestion === filteredQuestions.length - 1 && isCorrect && score === filteredQuestions.length) {
+                checkAchievements('perfect');
+            }
         }
 
         function skipQuestion() {
@@ -355,9 +1311,10 @@
             gameActive = false;
             streak = 0;
             
-            const currentQ = questions[currentQuestion];
-            showFeedback(false, `Soalan dilangkau. ${currentQ.explanation}`, 0);
+            const currentQ = filteredQuestions[currentQuestion];
+            showFeedback(false, 0, `Soalan dilangkau. Jawapan yang betul: ${currentQ.answer}. ${currentQ.explanation}`);
             highlightCorrectAnswer();
+            updateDisplays();
         }
 
         function handleTimeout() {
@@ -366,117 +1323,97 @@
             actionButtons.innerHTML = '<button class="btn btn-secondary" onclick="skipQuestion()">Masa Habis - Langkau atau Jawab</button>';
         }
 
-        function showFeedback(isCorrect, explanation, earnedPoints) {
+        // Feedback display
+        function showFeedback(isCorrect, earnedPoints, explanation) {
             const feedbackEl = document.getElementById('feedback');
             feedbackEl.style.display = 'block';
+            feedbackEl.className = `feedback ${isCorrect ? 'correct' : 'wrong'} show`;
             
-            if (isCorrect) {
-                feedbackEl.className = 'feedback correct';
-                feedbackEl.innerHTML = `
-                    <div>✅ Betul! +${earnedPoints} mata!</div>
-                    <div style="margin-top: 10px; font-weight: normal;">${explanation}</div>
-                `;
-            } else {
-                feedbackEl.className = 'feedback wrong';
-                feedbackEl.innerHTML = `
-                    <div>❌ Tidak betul.</div>
-                    <div style="margin-top: 10px; font-weight: normal;">${explanation}</div>
-                `;
-            }
+            const icon = isCorrect ? '✅' : '❌';
+            const title = isCorrect ? `Betul! +${earnedPoints} mata!` : 'Tidak betul.';
+            const bonus = (isCorrect && timeLeft > 20) ? '<br><span style="color: #ff9800;">⚡ Bonus Pantas!</span>' : '';
             
-            // Show next button
+            feedbackEl.innerHTML = `
+                <div class="feedback-header">
+                    <span class="feedback-icon">${icon}</span>
+                    <span>${title}${bonus}</span>
+                </div>
+                <div class="feedback-explanation">${explanation}</div>
+            `;
+            
+            // Update action buttons
             const actionButtons = document.getElementById('actionButtons');
-            if (currentQuestion < questions.length - 1) {
+            if (currentQuestion < filteredQuestions.length - 1) {
                 actionButtons.innerHTML = '<button class="btn btn-primary" onclick="nextQuestion()">Seterusnya</button>';
             } else {
                 actionButtons.innerHTML = '<button class="btn btn-primary" onclick="showResults()">Selesai</button>';
             }
         }
 
-        function highlightAnswer(selectedIndex, isCorrect) {
+        // Answer highlighting
+        function highlightAnswers(selectedAnswer, isCorrect) {
             const options = document.querySelectorAll('.option-btn');
-            const currentQ = questions[currentQuestion];
+            const currentQ = filteredQuestions[currentQuestion];
             
             options.forEach((btn, index) => {
                 btn.disabled = true;
+                const optionText = currentQ.options[index];
                 
-                if (index === currentQ.correct) {
+                if (optionText === currentQ.answer) {
                     btn.className = 'option-btn correct';
-                } else if (index === selectedIndex && !isCorrect) {
+                } else if (optionText === selectedAnswer && !isCorrect) {
                     btn.className = 'option-btn wrong';
+                } else {
+                    btn.className = 'option-btn disabled';
                 }
             });
         }
 
         function highlightCorrectAnswer() {
             const options = document.querySelectorAll('.option-btn');
-            const currentQ = questions[currentQuestion];
+            const currentQ = filteredQuestions[currentQuestion];
             
             options.forEach((btn, index) => {
                 btn.disabled = true;
-                if (index === currentQ.correct) {
+                const optionText = currentQ.options[index];
+                
+                if (optionText === currentQ.answer) {
                     btn.className = 'option-btn correct';
+                } else {
+                    btn.className = 'option-btn disabled';
                 }
             });
         }
 
+        // Navigation
         function nextQuestion() {
             currentQuestion++;
             loadQuestion();
         }
 
-        function loadQuestion() {
-            if (currentQuestion >= questions.length) {
-                showResults();
-                return;
-            }
-            
-            const currentQ = questions[currentQuestion];
-            
-            // Update question display
-            document.getElementById('questionText').textContent = currentQ.question;
-            
-            // Update options
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            currentQ.options.forEach((option, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
-                btn.onclick = () => selectAnswer(option);
-                optionsContainer.appendChild(btn);
-            });
-            
-            // Reset feedback and buttons
-            document.getElementById('feedback').style.display = 'none';
-            document.getElementById('actionButtons').innerHTML = '<button class="btn btn-secondary" onclick="skipQuestion()">Langkau Soalan</button>';
-            
-            // Reset timer
-            timeLeft = 30;
-            gameActive = true;
-            updateTimerDisplay();
-            startTimer();
-            
-            // Update displays
-            updateDisplays();
-        }
-
+        // Display updates
         function updateDisplays() {
-            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${questions.length}`;
+            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${filteredQuestions.length}`;
             document.getElementById('scoreDisplay').textContent = score;
             document.getElementById('pointsDisplay').textContent = points;
             document.getElementById('streakDisplay').textContent = streak;
+            document.getElementById('levelDisplay').textContent = level;
             
-            const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
+            const progressPercent = ((currentQuestion + 1) / filteredQuestions.length) * 100;
             const progressFill = document.getElementById('progressFill');
             progressFill.style.width = `${progressPercent}%`;
             progressFill.textContent = `${Math.round(progressPercent)}%`;
+            
+            const expPercent = ((experience % 100) / 100) * 100;
+            const expFill = document.getElementById('expFill');
+            expFill.style.width = `${expPercent}%`;
+            document.getElementById('expLabel').textContent = `Pengalaman: ${experience} / ${level * 100}`;
         }
 
+        // Results screen
         function showResults() {
             const gameArea = document.getElementById('gameArea');
-            const percentage = Math.round((score / questions.length) * 100);
+            const percentage = Math.round((score / filteredQuestions.length) * 100);
             
             let message = '';
             if (percentage === 100) message = 'SEMPURNA! Genius Matematik! 🧠👑';
@@ -484,39 +1421,96 @@
             else if (percentage >= 80) message = 'Cemerlang! 🌟';
             else if (percentage >= 70) message = 'Bagus Sekali! 👍✨';
             else if (percentage >= 60) message = 'Bagus! 👍';
-            else message = 'Cuba Lagi! 💪';
+            else if (percentage >= 50) message = 'Boleh Tahan! 💪';
+            else message = 'Cuba Lagi! Jangan Putus Asa! 🤗';
+            
+            let achievementsHTML = '';
+            if (unlockedAchievements.length > 0) {
+                achievementsHTML = `
+                    <div class="achievements-section">
+                        <h3>🏆 Pencapaian Dibuka</h3>
+                        <div class="achievements-grid">
+                            ${unlockedAchievements.map(id => {
+                                const achievement = achievementDefinitions.find(a => a.id === id);
+                                return achievement ? `
+                                    <div class="achievement-badge">
+                                        <div class="achievement-icon">${achievement.icon}</div>
+                                        <div class="achievement-name">${achievement.name}</div>
+                                    </div>
+                                ` : '';
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }
             
             gameArea.innerHTML = `
                 <div class="complete-screen">
-                    <div class="trophy">🏆</div>
+                    <div class="trophy-animation">🏆</div>
                     <h2 style="color: #1976d2; margin-bottom: 30px;">Tahniah!</h2>
-                    <div class="final-score">
-                        <div>Skor: ${score}/${questions.length}</div>
-                        <div>Mata: ${points}</div>
-                        <div>Peratusan: ${percentage}%</div>
+                    
+                    <div class="final-stats">
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #1976d2;">${score}/${filteredQuestions.length}</div>
+                            <div class="final-stat-label">Soalan Betul</div>
+                        </div>
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #4caf50;">${points}</div>
+                            <div class="final-stat-label">Mata Dikumpul</div>
+                        </div>
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #ff9800;">${bestStreak}</div>
+                            <div class="final-stat-label">Berturut Terbaik</div>
+                        </div>
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #9c27b0;">${level}</div>
+                            <div class="final-stat-label">Tahap Dicapai</div>
+                        </div>
                     </div>
-                    <div style="font-size: 1.5em; color: #4caf50; margin-bottom: 30px;">${message}</div>
-                    <button class="btn btn-primary" onclick="restartGame()" style="font-size: 1.2em; padding: 15px 30px;">
-                        🔄 Main Lagi
-                    </button>
+                    
+                    <div style="font-size: 1.2em; margin-bottom: 10px;">Peratusan: ${percentage}%</div>
+                    <div style="font-size: 1.8em; color: #4caf50; margin-bottom: 30px; font-weight: bold;">${message}</div>
+                    
+                    ${achievementsHTML}
+                    
+                    <div class="action-buttons" style="margin-top: 40px;">
+                        <button class="btn btn-primary" onclick="restartGame()" style="font-size: 1.2em; padding: 15px 30px;">
+                            🔄 Main Lagi
+                        </button>
+                    </div>
                 </div>
             `;
             
-            document.getElementById('timer').style.display = 'none';
+            document.getElementById('timerDisplay').style.display = 'none';
         }
 
+        // Category change
+        function onCategoryChange() {
+            const select = document.getElementById('categorySelect');
+            selectedCategory = select.value;
+            restartGame();
+        }
+
+        // Game restart
         function restartGame() {
             currentQuestion = 0;
             score = 0;
             points = 0;
             streak = 0;
-            document.getElementById('timer').style.display = 'block';
+            level = 1;
+            experience = 0;
+            unlockedAchievements = [];
+            
+            document.getElementById('timerDisplay').style.display = 'block';
+            filterQuestions();
             loadQuestion();
         }
 
-        // Start the game
-        updateDisplays();
-        startTimer();
+        // Event listeners
+        document.getElementById('categorySelect').addEventListener('change', onCategoryChange);
+
+        // Initialize the game
+        initGame();
     </script>
 </body>
 </html>
