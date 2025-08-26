@@ -1,1 +1,26 @@
+Questions 1-10 (Simple):
 
+Basic coordinate identification
+Simple ratio calculations
+Proportion problems
+Speed/distance calculations
+
+Questions 11-20 (Complex word problems with images):
+
+Coordinate mapping scenarios
+Multi-step ratio problems
+Real-world proportion applications
+Complex journey planning
+
+Required Images for Questions 11-20:
+
+images/kedai-goh-coordinates.png - Coordinate grid showing Goh's shop with items and price table
+images/shahir-chan-cats.png - Photo of Shahir's cat with ratio problem context
+images/papan-warna-table.png - Table showing blue and green board lengths
+images/victor-driving-distance.png - Victor driving with distance/time indicators
+images/penang-tourist-map.png - Coordinate map of Penang tourist attractions
+images/triangle-coordinates.png - Coordinate grid showing triangle formation
+images/guli-boxes-table.png - Table showing marble counts in different boxes
+images/chocolate-bars-weight.png - 4 chocolate bars with weight scale
+images/karina-taxi-map.png - Coordinate map with Karina's house and destinations
+images/erik-journey-route.png - Route map showing Erik's journey through cities
