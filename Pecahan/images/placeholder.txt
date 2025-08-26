@@ -1,1 +1,25 @@
+Questions 1-10: Simple calculations (NO images needed)
 
+Q1: Convert 29/7 to mixed number
+Q2: Convert 5 3/8 to improper fraction
+Q3: Add 4/9 + 1/9
+Q4: Add 3/4 + 5/6
+Q5: Subtract 7/8 - 3/8
+Q6: Add 2.48 + 36.7
+Q7: Multiply 8 × 1.07
+Q8: Multiply 100 × 5.074
+Q9: Convert 4/5 to percentage
+Q10: Calculate 15% of 50
+
+Questions 11-20: Word problems (WITH specific images needed)
+
+Q11: images/pauline-savings.png (Pauline's money problem)
+Q12: images/gawing-gambit-route.png (School routes)
+Q13: images/quiz-scores.png (Students' quiz comparison)
+Q14: images/hamimah-drink-ingredients.png (Drink recipe)
+Q15: images/ayah-fong-rope.png (Rope problem)
+Q16: images/number-crossword.png (Math crossword)
+Q17: images/mixed-number-addition.png (Mixed number steps)
+Q18: images/daily-activities-pie-chart.png (Pie chart)
+Q19: images/fraction-equation.png (Equation with missing value)
+Q20: images/treasure-hunt-table.png (Competition results table)
