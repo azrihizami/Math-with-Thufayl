@@ -419,6 +419,25 @@
             box-shadow: 0 8px 25px rgba(117, 117, 117, 0.4);
         }
         
+        .btn-back {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+            border: 2px solid transparent;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+            border-color: #495057;
+        }
+        
+        .back-button-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        
         .timer-display {
             position: fixed;
             top: 10px;
@@ -665,7 +684,13 @@
     </style>
 </head>
 <body>
-    <div class="timer-display" id="timerDisplay">⏰ 30s</div>
+    <div class="timer-display" id="timerDisplay">⏰ 2:00</div>
+    
+    <div class="back-button-container">
+        <button class="btn btn-back" onclick="goBack()">
+            ← Kembali
+        </button>
+    </div>
     
     <div class="container">
         <div class="header">
@@ -695,7 +720,7 @@
                 <div class="stat-label">Tahap</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number" id="timerStat" style="color: #2196f3;">30s</div>
+                <div class="stat-number" id="timerStat" style="color: #2196f3;">2:00</div>
                 <div class="stat-label">Masa</div>
             </div>
         </div>
@@ -786,11 +811,11 @@
                 image: {
                     src: 'images/electricity-meter.png',
                     alt: 'Bacaan meter elektrik April dan Mei',
-                    description: 'Meter elektrik April: 00865439 kWh, Meter elektrik Mei: 00931058 kWh'
+                    description: 'Meter elektrik April: 65,439 kWh, Meter elektrik Mei: 91,058 kWh'
                 },
-                answer: '65,619',
-                options: ['65,619', '65,916', '66,519', '65,691'],
-                explanation: '931058 - 865439 = 65,619 kWh'
+                answer: '25,619',
+                options: ['25,916', '25,619', '26,519', '25,691'],
+                explanation: '91,058 - 65,439 = 25,619 kWh'
             },
             {
                 id: 3,
@@ -798,7 +823,7 @@
                 difficulty: 'medium',
                 question: 'Sebanyak 1 375 keping baucar telah diedarkan ke setiap sekolah. Hitung jumlah baucar yang diedarkan ke 25 buah sekolah.',
                 answer: '34,375',
-                options: ['34,375', '34,750', '35,000', '33,750'],
+                options: ['35,000', '34,750', '34,375', '33,750'],
                 explanation: '1,375 × 25 = 34,375 keping baucar'
             },
             {
@@ -812,7 +837,7 @@
                     description: 'Punitha: "Kakak saya ada 14,801 orang kawan di laman sosial." Liman: "Abang saya ada 2,928 orang kawan lebih daripada kakak kamu."'
                 },
                 answer: '17,729',
-                options: ['17,729', '17,792', '17,927', '17,279'],
+                options: ['17,792', '17,279', '17,729', '17,927'],
                 explanation: '14,801 + 2,928 = 17,729 orang kawan'
             },
             {
@@ -821,7 +846,7 @@
                 difficulty: 'medium',
                 question: 'Sebuah syarikat produk kesihatan telah menjual sejumlah 34 780 produk pada bulan Januari, Februari dan Mac. Bilangan produk yang dijual pada bulan Januari dan Februari masing-masing ialah 15 432 dan 8 095. Hitung bilangan produk yang dijual pada bulan Mac.',
                 answer: '11,253',
-                options: ['11,253', '11,352', '11,235', '11,325'],
+                options: ['11,352', '11,253', '11,325', '11,235'],
                 explanation: '34,780 - 15,432 - 8,095 = 11,253 produk'
             },
             {
@@ -835,17 +860,17 @@
                     description: '69,840 cucuk sate akan dimasukkan ke dalam bekas, 40 cucuk setiap bekas'
                 },
                 answer: '1,746',
-                options: ['1,746', '1,764', '1,674', '1,647'],
+                options: ['1,674', '1,746', '1,647', '1,764'],
                 explanation: '69,840 ÷ 40 = 1,746 bekas'
             },
             {
                 id: 7,
                 category: 'word_problems',
                 difficulty: 'medium',
-                question: 'Seorang penjual menyediakan 2 600 keping wafel coklat. Sebanyak 900 keping wafel disumbangkan ke rumah anak yatim. Penjual itu menyediakan 1 480 keping wafel kacang pula. Kira bilangan wafel yang dihantar ke pusat penjagaan kanak-kanak.',
+                question: 'Seorang penjual menyediakan 2 600 keping wafel coklat. Sebanyak 900 keping wafel disumbangkan ke rumah anak yatim. Penjual itu menyediakan 1 480 keping wafel kacang pula. Kesemua wafel yang ada dihantar ke beberapa pusat penjagaan kanak-kanak. Kira bilangan wafel yang dihantar ke pusat penjagaan kanak-kanak.',
                 answer: '3,180',
-                options: ['3,180', '3,080', '3,280', '3,108'],
-                explanation: '2,600 - 900 + 1,480 = 3,180 keping wafel'
+                options: ['3,280', '3,108', '3,080', '3,180'],
+                explanation: '2,600 - 900 + 1,480 = 3,180 keping wafel dihantar ke pusat penjagaan kanak-kanak'
             },
             {
                 id: 8,
@@ -858,7 +883,7 @@
                     description: '7 kotak kurma (35 biji setiap kotak) dibungkus semula dalam beg plastik (5 biji setiap beg)'
                 },
                 answer: '49',
-                options: ['49', '48', '50', '47'],
+                options: ['47', '49', '48', '50'],
                 explanation: '7 × 35 = 245 biji kurma. 245 ÷ 5 = 49 beg plastik'
             },
             {
@@ -867,7 +892,7 @@
                 difficulty: 'hard',
                 question: 'Sejumlah 84 720 naskhah surat khabar diedarkan sama banyak setiap hari dalam bulan April. Kira bilangan surat khabar yang diedarkan dalam seminggu.',
                 answer: '19,768',
-                options: ['19,768', '19,876', '19,687', '19,786'],
+                options: ['19,687', '19,876', '19,786', '19,768'],
                 explanation: '84,720 ÷ 30 hari = 2,824 sehari. 2,824 × 7 = 19,768 dalam seminggu'
             },
             {
@@ -876,7 +901,7 @@
                 difficulty: 'easy',
                 question: 'Bersempena dengan Kempen Bumi Hijau, lebih kurang 20 000 pokok telah ditanam di beberapa buah taman rekreasi. Bilangan pokok itu telah dibundarkan kepada puluh ribu terdekat. Berikan satu nilai yang mungkin bagi bilangan pokok yang ditanam.',
                 answer: '18,500',
-                options: ['18,500', '24,500', '14,500', '25,500'],
+                options: ['25,500', '18,500', '14,500', '24,500'],
                 explanation: 'Nilai antara 15,000 hingga 24,999 akan dibundarkan kepada 20,000'
             },
             {
@@ -890,7 +915,7 @@
                     description: '12 bunga anggerik ungu + y bunga anggerik putih = 36 bunga total'
                 },
                 answer: '24',
-                options: ['24', '22', '26', '25'],
+                options: ['22', '26', '24', '25'],
                 explanation: '12 + y = 36, jadi y = 36 - 12 = 24'
             },
             {
@@ -899,7 +924,7 @@
                 difficulty: 'easy',
                 question: 'Sebuah blok pangsapuri ada sejumlah 90 unit rumah. p unit rumah telah didiami. 15 unit rumah pula belum didiami. Tentukan nilai p.',
                 answer: '75',
-                options: ['75', '65', '80', '70'],
+                options: ['65', '75', '70', '80'],
                 explanation: 'p + 15 = 90, jadi p = 90 - 15 = 75'
             },
             {
@@ -916,7 +941,7 @@
                     alt: 'Jadual bilangan itik dalam sangkar'
                 },
                 answer: '12',
-                options: ['12', '10', '14', '11'],
+                options: ['14', '12', '10', '11'],
                 explanation: '14 + 15 = 29, jadi 17 + k = 29. k = 29 - 17 = 12'
             },
             {
@@ -943,7 +968,7 @@
                 difficulty: 'easy',
                 question: '24 509, 25 509, 26 509, ... Apakah nombor yang keempat?',
                 answer: '27,509',
-                options: ['27,509', '27,590', '28,509', '27,059'],
+                options: ['28,509', '27,590', '27,509', '27,059'],
                 explanation: 'Pola: tambah 1000. Jadi 26,509 + 1000 = 27,509'
             },
             {
@@ -952,7 +977,7 @@
                 difficulty: 'medium',
                 question: 'Hitung: 72 ÷ 12 × 15',
                 answer: '90',
-                options: ['90', '36', '180', '60'],
+                options: ['60', '90', '36', '180'],
                 explanation: '72 ÷ 12 = 6, kemudian 6 × 15 = 90'
             },
             {
@@ -961,7 +986,7 @@
                 difficulty: 'easy',
                 question: 'Hitung jumlah bagi 48 925 dan 37 106.',
                 answer: '86,031',
-                options: ['86,031', '86,130', '86,013', '86,301'],
+                options: ['86,301', '86,031', '86,130', '86,013'],
                 explanation: '48,925 + 37,106 = 86,031'
             },
             {
@@ -970,7 +995,7 @@
                 difficulty: 'easy',
                 question: 'Bundarkan 59 720 kepada puluh ribu terdekat.',
                 answer: '60,000',
-                options: ['60,000', '50,000', '59,000', '70,000'],
+                options: ['59,000', '60,000', '70,000', '50,000'],
                 explanation: '59,720 lebih dekat kepada 60,000 daripada 50,000'
             },
             {
@@ -984,7 +1009,7 @@
                     description: '70 setem total: m setem Malaysia + 18 setem luar negara'
                 },
                 answer: '52',
-                options: ['52', '48', '58', '62'],
+                options: ['48', '58', '52', '62'],
                 explanation: 'm + 18 = 70, jadi m = 70 - 18 = 52'
             }
         ];
@@ -1036,7 +1061,7 @@
         // Timer functions
         function startTimer() {
             clearInterval(timerInterval);
-            timeLeft = 30;
+            timeLeft = 120; // Changed to 2 minutes (120 seconds)
             gameActive = true;
             
             timerInterval = setInterval(() => {
@@ -1045,7 +1070,8 @@
                 
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    handleTimeout();
+                    // Don't disable game activity - let students still answer
+                    // gameActive = false; // Removed this line
                 }
             }, 1000);
         }
@@ -1055,15 +1081,19 @@
             const timerBar = document.getElementById('timerBar');
             const timerStat = document.getElementById('timerStat');
             
-            timerEl.textContent = `⏰ ${timeLeft}s`;
-            timerStat.textContent = `${timeLeft}s`;
-            timerBar.style.width = `${(timeLeft / 30) * 100}%`;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
             
-            if (timeLeft <= 5) {
+            timerEl.textContent = `⏰ ${timeText}`;
+            timerStat.textContent = timeText;
+            timerBar.style.width = `${(timeLeft / 120) * 100}%`;
+            
+            if (timeLeft <= 10) {
                 timerEl.className = 'timer-display danger';
                 timerBar.className = 'timer-fill danger';
                 timerStat.style.color = '#f44336';
-            } else if (timeLeft <= 10) {
+            } else if (timeLeft <= 30) {
                 timerEl.className = 'timer-display warning';
                 timerBar.className = 'timer-fill warning';
                 timerStat.style.color = '#ff9800';
@@ -1086,7 +1116,8 @@
                 default: basePoints = 15;
             }
             
-            let timeBonus = timeRemaining > 20 ? 10 : timeRemaining > 10 ? 5 : 0;
+            // Adjusted for 2-minute timer
+            let timeBonus = timeRemaining > 60 ? 10 : timeRemaining > 30 ? 5 : 0;
             let streakMultiplier = Math.min(streak + 1, 3);
             
             return Math.round((basePoints + timeBonus) * streakMultiplier);
@@ -1130,7 +1161,7 @@
                     if (value >= 5 && !unlockedAchievements.includes('streak_5')) newAchievements.push('streak_5');
                     break;
                 case 'quick_answer':
-                    if (timeLeft > 20 && !unlockedAchievements.includes('quick_thinker')) {
+                    if (timeLeft > 90 && !unlockedAchievements.includes('quick_thinker')) {
                         newAchievements.push('quick_thinker');
                     }
                     break;
@@ -1322,7 +1353,7 @@
                 // Check achievements
                 if (newScore === 1) checkAchievements('first_correct');
                 checkAchievements('streak', newStreak);
-                if (timeLeft > 20) checkAchievements('quick_answer');
+                if (timeLeft > 90) checkAchievements('quick_answer');
                 checkAchievements('points', newPoints);
                 
                 showFeedback(true, earnedPoints, currentQ.explanation);
@@ -1354,9 +1385,8 @@
         }
 
         function handleTimeout() {
-            gameActive = false;
-            const actionButtons = document.getElementById('actionButtons');
-            actionButtons.innerHTML = '<button class="btn btn-secondary" onclick="skipQuestion()">Masa Habis - Langkau atau Jawab</button>';
+            // Timer finished but students can still answer
+            // No action needed - just let the timer show 0:00
         }
 
         // Feedback display
@@ -1367,7 +1397,7 @@
             
             const icon = isCorrect ? '✅' : '❌';
             const title = isCorrect ? `Betul! +${earnedPoints} mata!` : 'Tidak betul.';
-            const bonus = (isCorrect && timeLeft > 20) ? '<br><span style="color: #ff9800;">⚡ Bonus Pantas!</span>' : '';
+            const bonus = (isCorrect && timeLeft > 90) ? '<br><span style="color: #ff9800;">⚡ Bonus Pantas!</span>' : '';
             
             feedbackEl.innerHTML = `
                 <div class="feedback-header">
@@ -1464,7 +1494,7 @@
             if (unlockedAchievements.length > 0) {
                 achievementsHTML = `
                     <div class="achievements-section">
-                        <h3>🏆 Pencapaian Dibuka</h3>
+                        <h3>🏆 Pencapaian</h3>
                         <div class="achievements-grid">
                             ${unlockedAchievements.map(id => {
                                 const achievement = achievementDefinitions.find(a => a.id === id);
@@ -1510,8 +1540,11 @@
                     ${achievementsHTML}
                     
                     <div class="action-buttons" style="margin-top: 40px;">
-                        <button class="btn btn-primary" onclick="restartGame()" style="font-size: 1.2em; padding: 15px 30px;">
+                        <button class="btn btn-primary" onclick="restartGame()" style="font-size: 1.2em; padding: 15px 30px; margin-right: 15px;">
                             🔄 Main Lagi
+                        </button>
+                        <button class="btn btn-back" onclick="goBack()" style="font-size: 1.2em; padding: 15px 30px;">
+                            ← Halaman Utama
                         </button>
                     </div>
                 </div>
@@ -1540,6 +1573,12 @@
             document.getElementById('timerDisplay').style.display = 'block';
             filterQuestions();
             loadQuestion();
+        }
+
+        // Navigation functions
+        function goBack() {
+            // Go back to parent directory (main page)
+            window.location.href = '../';
         }
 
         // Event listeners
