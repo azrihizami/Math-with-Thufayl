@@ -1409,7 +1409,7 @@
             
             // Update action buttons
             const actionButtons = document.getElementById('actionButtons');
-            if (currentQuestion < filteredQuestions.length - 1) {
+            if (currentQuestion < questions.length - 1) {
                 actionButtons.innerHTML = '<button class="btn btn-primary" onclick="nextQuestion()">Seterusnya</button>';
             } else {
                 actionButtons.innerHTML = '<button class="btn btn-primary" onclick="showResults()">Selesai</button>';
@@ -1459,13 +1459,13 @@
 
         // Display updates
         function updateDisplays() {
-            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${filteredQuestions.length}`;
+            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${questions.length}`;
             document.getElementById('scoreDisplay').textContent = score;
             document.getElementById('pointsDisplay').textContent = points;
             document.getElementById('streakDisplay').textContent = streak;
             document.getElementById('levelDisplay').textContent = level;
             
-            const progressPercent = ((currentQuestion + 1) / filteredQuestions.length) * 100;
+            const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
             const progressFill = document.getElementById('progressFill');
             progressFill.style.width = `${progressPercent}%`;
             progressFill.textContent = `${Math.round(progressPercent)}%`;
