@@ -1,1 +1,36 @@
+Questions 1-10 (Simple calculations):
 
+Money addition: RM49,500 + RM18,759.30
+Money subtraction: RM58,077.40 - RM23,602.50
+Mixed operations: 86,040 ÷ 12 × 4
+Fraction conversion: 19/7 to mixed number
+Fraction addition: 4/7 + 5/7
+Decimal multiplication: 6.834 × 100
+Percentage calculation: 16 out of 40 balls
+Number rounding: 72,963 to nearest thousand
+Decimal addition: 90.874 + 56 + 102.34
+Money multiplication: 65 × RM900.20
+
+Questions 11-20 (Complex word problems with images):
+11. Business profit calculation (Kraf Jaya)
+12. Cooperative profit distribution
+13. Bank statement completion
+14. Plant distribution problem
+15. Orange packaging optimization
+16. Gaming competition scores
+17. Relay race distance calculation
+18. Flour portion usage
+19. Monthly savings calculation
+20. Fruit distribution and portioning
+Required Images for Questions 11-20:
+
+images/business-profit-chart.png - Bar chart showing May/June profits for Kraf Jaya
+images/cooperative-distribution.png - 25 members in circle with RM61,250 in center
+images/bank-statement-table.png - Bank statement table with transaction entries
+images/chili-plant-distribution.png - 3 shelves with plants, 6 buyers waiting
+images/orange-packaging.png - Warehouse with 24,000 oranges and packing boxes
+images/gaming-competition-scores.png - Electronic scoreboard with 3 players
+images/relay-race-torch.png - 35km race map with 3 segments marked
+images/flour-cooking-portions.png - Flour container showing portions used
+images/monthly-savings-plan.png - 30-month calendar with savings visualization
+images/langsat-fruit-distribution.png - Wafiq distributing langsat fruit to neighbor
