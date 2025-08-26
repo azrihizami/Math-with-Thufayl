@@ -1,1 +1,36 @@
+Questions 1-10 (Simple calculations):
 
+Convert 24-hour time (Jam 1330) to 12-hour format
+Convert 8:45 a.m. to 24-hour format
+Convert 11:33 p.m. to 24-hour format
+Calculate: 5 hours 55 minutes - 3 hours 5 minutes
+Calculate: 1 year 4 months + 7 months
+Calculate: 4 × 25 years
+Calculate: 108 years ÷ 6
+Calculate: 13 hours 40 minutes ÷ 4
+Convert 52 hours to days and hours
+Convert 5 years 8 months to months
+
+Questions 11-20 (Complex word problems with images):
+11. History project timeline calculation
+12. Work schedule calculation (8 hours 30 minutes × 20 days)
+13. ASEAN trip duration calculation
+14. Construction project timeline per floor
+15. Cycling race duration calculation
+16. Housing project total duration
+17. Vacation time comparison between two people
+18. Travel timeline to Pulau Perhentian
+19. Convert vacation time to hours
+20. Family age relationship verification
+Required Images (Questions 11-20)
+
+images/history-project-schedule.png - Project timeline table
+images/working-schedule.png - Calendar showing work days
+images/asean-trip.png - Map of ASEAN countries with duration labels
+images/construction-project.png - 5-story building construction phases
+images/cycling-race.png - Cycling race with start/end times
+images/housing-projects.png - Three housing development projects
+images/vacation-comparison.png - Comparison chart of two vacations
+images/travel-timeline.png - Airport to island travel route
+images/bako-national-park.png - Park with vacation duration display
+images/family-ages.png - Three generations with age calculations
