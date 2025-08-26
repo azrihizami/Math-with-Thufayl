@@ -14,7 +14,6 @@ Complex Problem-Solving Questions (11-20):
 Question 11: images/books-read-pictograph.png - Book reading data for 4 friends
 Question 12: images/quiz-scores-with-bonus.png - Quiz scores before/after bonus
 Question 13: images/sports-store-sales-chart.png - Ball sales data with pricing
-Question 14: images/stamp-collection-comparison.png - Stamp collection comparison
 Question 15: images/fishing-competition-results.png - Fishing competition pictograph
 Question 16: images/student-quiz-analysis-table.png - Student performance analysis
 Question 17: images/sports-skills-assessment-chart.png - Sports skills evaluation chart
