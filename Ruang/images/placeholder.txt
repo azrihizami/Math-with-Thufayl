@@ -1,1 +1,60 @@
+Questions requiring images (11-20):
 
+Question 11: images/zura-table-cloth.png
+
+Shows a square tablecloth with decorative lace trim around the edges
+Visual representation of 240 cm total perimeter
+
+
+Question 12: images/lai-fong-cubes.png
+
+48 small cubes (3cm each) arranged in a cuboid container
+Shows the packing arrangement concept
+
+
+Question 13: images/david-rubik-cube-box.png
+
+Box dimensions 16×12×8 cm with 4×4×4 cm Rubik's cubes
+Demonstrates volume division concept
+
+
+Question 14: images/zaini-cattle-pen.png
+
+Square cattle pen with 16m sides and fence perimeter
+Shows person measuring the fence
+
+
+Question 15: images/goat-pen-comparison.png
+
+Side-by-side comparison of cattle pen (16×16m) and goat pen (20×16m)
+Visual comparison showing 4m difference
+
+
+Question 16: images/playground-aerial-view.png
+
+Aerial view of rectangular playground with 50m perimeter fence
+Shows playground equipment and 16m length dimension
+
+
+Question 17: images/raju-containers.png
+
+Two containers: cuboid A (p×8×2 cm) and cube B (8×8×8 cm)
+Equal volume concept illustration
+
+
+Question 18: images/tissue-box-dimensions.png
+
+Tissue box with labeled dimensions: 9cm × 7cm × 5cm
+Clear measurement labels on each side
+
+
+Question 19: images/container-surface-area.png
+
+Cuboid T with height 7m and base area highlighted
+Shows 12 m² surface area on base
+
+
+Question 20: images/truck-container-cubes.png
+
+Truck container (6×2.5×2 m) filled with small cubes (0.5m sides)
+Demonstrates efficient packing
