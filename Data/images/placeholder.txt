@@ -1,89 +1,23 @@
-Simple Chart Reading Questions (Need Basic Visual Aids)
-Question 3: images/star-points-pictograph.png
+Updated Complete Image Requirements:
+Questions 2, 3, 4, 6, 7, 10-20 now ALL have images allocated:
+Simple Chart Reading Questions:
 
-Simple pictograph showing Ali (2 stars), Siti (3 stars), Raj (4 stars)
-Each star symbol clearly labeled as = 5 points
+Question 2: images/team-scores-comparison.png - Bar chart showing Team A (60) vs Team B (40)
+Question 3: images/star-points-pictograph.png - Pictograph with star symbols for Ali, Siti, Raj
+Question 4: images/fruit-preferences-chart.png - Bar chart showing fruit preferences (Apple: 4, Orange: 6, Banana: 2)
+Question 6: images/monthly-sales-bar-chart.png - Monthly sales data (Jan: 50, Feb: 75, Mar: 60)
+Question 7: images/school-comparison-pictograph.png - School enrollment pictograph
+Question 10: images/test-scores-bar-chart.png - Test scores for Ahmad, Fatimah, Kumar
 
-Question 6: images/monthly-sales-bar-chart.png
+Complex Problem-Solving Questions (11-20):
 
-Basic bar chart showing sales data: January (50), February (75), March (60)
-Y-axis labeled "Penjualan", X-axis showing months
-
-Question 7: images/school-comparison-pictograph.png
-
-Pictograph showing three schools with student symbols
-School A: 6 symbols, School B: 4 symbols, School C: 8 symbols
-Clear legend showing 1 symbol = 10 students
-
-Question 10: images/test-scores-bar-chart.png
-
-Bar chart showing Ahmad (80), Fatimah (90), Kumar (85)
-Y-axis labeled "Markah", bars clearly differentiated
-
-Complex Problem-Solving Questions (Need Detailed Figures)
-Question 11: images/books-read-pictograph.png
-
-Detailed pictograph with book symbols for 4 students
-Show exact symbol counts per student with clear legend (1 book = 3 books read)
-
-Question 12: images/quiz-scores-with-bonus.png
-
-Bar chart showing original scores AND updated scores after +15 bonus
-Side-by-side comparison or before/after visual
-Clear indication of 100-point threshold line
-
-Question 13: images/sports-store-sales-chart.png
-
-Monthly sales data with ball illustrations
-Include price indicator (RM50 per ball)
-Visual totals for calculations
-
-Question 14: images/stamp-collection-comparison.png
-
-Visual representation of 4 friends' stamp collections
-Use colorful stamp imagery with clear quantity indicators
-
-Question 15: images/fishing-competition-results.png
-
-Pictograph using fish symbols (1 fish = 2 actual fish)
-Show all 5 participants with their catches
-Highlight Adin as winner
-
-Question 16: images/student-quiz-analysis-table.png
-
-Formal table showing three students' scores with fraction format
-Include percentage calculation columns
-Professional academic assessment layout
-
-Question 17: images/sports-skills-assessment-chart.png
-
-Bar chart showing Zariq's 5 different sports skills
-Include qualification threshold line at 45 points
-Skills: Lontar, Sambut, Halang, Jaring, Hantaran Lantun
-
-Question 18: images/library-weekly-traffic.png
-
-Weekly bar chart showing daily visitor counts
-Monday through Friday data clearly labeled
-Include average line or calculation area
-
-Question 19: images/canteen-food-survey-results.png
-
-Pie chart or combination chart showing 200 students' food preferences
-Include both raw numbers and percentages
-Visual breakdown of popular vs unpopular choices
-
-Question 20: images/water-usage-environmental-data.png
-
-Bar chart showing 5 houses' water consumption
-Include 180L target line
-Show before/after comparison for 10% reduction scenario
-
-Essential Design Elements for All Charts:
-
-Clear legends explaining symbols/scales
-Proper axis labeling in Bahasa Malaysia
-Color-coded data for easy differentiation
-Grid lines for precise reading
-Title headers matching question context
-Professional appearance suitable for educational use
+Question 11: images/books-read-pictograph.png - Book reading data for 4 friends
+Question 12: images/quiz-scores-with-bonus.png - Quiz scores before/after bonus
+Question 13: images/sports-store-sales-chart.png - Ball sales data with pricing
+Question 14: images/stamp-collection-comparison.png - Stamp collection comparison
+Question 15: images/fishing-competition-results.png - Fishing competition pictograph
+Question 16: images/student-quiz-analysis-table.png - Student performance analysis
+Question 17: images/sports-skills-assessment-chart.png - Sports skills evaluation chart
+Question 18: images/library-weekly-traffic.png - Weekly library visits
+Question 19: images/canteen-food-survey-results.png - School canteen food survey
+Question 20: images/water-usage-environmental-data.png - Environmental water usage data
