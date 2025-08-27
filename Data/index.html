@@ -37,6 +37,7 @@
             font-size: 2.5em;
             color: #e65100;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
         
         .subtitle {
@@ -73,6 +74,56 @@
             letter-spacing: 1px;
         }
         
+        .experience-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .exp-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .exp-bar {
+            width: 100%;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .exp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e65100, #ff8a50);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .category-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .category-select {
+            padding: 12px 20px;
+            border: 2px solid #e65100;
+            border-radius: 8px;
+            background: white;
+            color: #e65100;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-select:hover {
+            background: #e65100;
+            color: white;
+        }
+        
         .progress-section {
             margin-bottom: 30px;
         }
@@ -84,12 +135,13 @@
             border-radius: 10px;
             margin-bottom: 10px;
             overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #e65100, #ff9800);
-            width: 5%;
+            background: linear-gradient(90deg, #e65100, #ff8a50);
+            width: 0%;
             transition: width 0.5s ease;
             display: flex;
             align-items: center;
@@ -111,8 +163,22 @@
         .timer-fill {
             height: 100%;
             width: 100%;
-            background: #4caf50;
             transition: all 1s linear;
+            background: #ff8a50;
+        }
+        
+        .timer-fill.warning {
+            background: #ff9800;
+        }
+        
+        .timer-fill.danger {
+            background: #f44336;
+            animation: pulse-timer 0.5s infinite alternate;
+        }
+        
+        @keyframes pulse-timer {
+            from { opacity: 1; }
+            to { opacity: 0.7; }
         }
         
         .question-card {
@@ -121,6 +187,7 @@
             border-radius: 15px;
             border: 2px solid #e0e0e0;
             margin-bottom: 20px;
+            position: relative;
         }
         
         .question-header {
@@ -141,6 +208,30 @@
             line-height: 1.6;
         }
         
+        .image-container {
+            background: #f5f5f5;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .image-fallback {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            color: #e65100;
+            font-weight: 500;
+        }
+        
         .difficulty-badges {
             display: flex;
             flex-direction: column;
@@ -157,7 +248,7 @@
         }
         
         .difficulty-easy { background: #e8f5e9; color: #2e7d32; }
-        .difficulty-medium { background: #fff3e0; color: #f57c00; }
+        .difficulty-medium { background: #fff3e0; color: #e65100; }
         .difficulty-hard { background: #ffebee; color: #c62828; }
         
         .points-badge {
@@ -189,16 +280,19 @@
             padding: 20px;
             border: 2px solid #e65100;
             border-radius: 12px;
-            background: #fff8f3;
+            background: #fff8f0;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: left;
             font-size: 1em;
+            position: relative;
+            transform-origin: center;
         }
         
-        .option-btn:hover {
+        .option-btn:hover:not(:disabled) {
             background: #fff3e0;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(230, 81, 0, 0.15);
         }
         
         .option-label {
@@ -216,12 +310,14 @@
             background: #4caf50;
             color: white;
             border-color: #4caf50;
+            animation: correctPulse 0.6s ease-out;
         }
         
         .option-btn.wrong {
             background: #f44336;
             color: white;
             border-color: #f44336;
+            animation: wrongShake 0.5s ease-out;
         }
         
         .option-btn.disabled {
@@ -231,22 +327,50 @@
             cursor: not-allowed;
         }
         
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
         .feedback {
             padding: 25px;
             border-radius: 12px;
             margin-top: 20px;
             border: 2px solid;
-            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feedback::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .feedback.show::before {
+            left: 100%;
         }
         
         .feedback.correct {
-            background: #e8f5e9;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
             color: #2e7d32;
             border-color: #4caf50;
         }
         
         .feedback.wrong {
-            background: #ffebee;
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
             color: #c62828;
             border-color: #f44336;
         }
@@ -264,6 +388,11 @@
             font-size: 1.5em;
         }
         
+        .feedback-explanation {
+            font-weight: normal;
+            line-height: 1.5;
+        }
+        
         .btn {
             padding: 15px 30px;
             border: none;
@@ -273,25 +402,43 @@
             font-weight: bold;
             transition: all 0.3s ease;
             margin: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #e65100, #ff9800);
+            background: linear-gradient(135deg, #e65100, #ff8a50);
             color: white;
+            box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(230, 81, 0, 0.4);
         }
         
         .btn-secondary {
-            background: #757575;
+            background: linear-gradient(135deg, #757575, #616161);
             color: white;
+            box-shadow: 0 4px 15px rgba(117, 117, 117, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(117, 117, 117, 0.4);
         }
         
         .btn-back {
-            background: #6c757d;
+            background: linear-gradient(135deg, #6c757d, #5a6268);
             color: white;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+            border: 2px solid transparent;
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+            border-color: #495057;
         }
         
         .back-button-container {
@@ -312,6 +459,139 @@
             font-size: 1.1em;
             border: 2px solid #e0e0e0;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .timer-display.warning {
+            background: #ff9800;
+            color: white;
+            border-color: #ff9800;
+            animation: pulse 2s infinite;
+        }
+        
+        .timer-display.danger {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+            animation: urgentPulse 0.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes urgentPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-2deg); }
+            75% { transform: scale(1.1) rotate(2deg); }
+        }
+        
+        .complete-screen {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .trophy-animation {
+            font-size: 5em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+        
+        .final-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .final-stat {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .final-stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .final-stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .achievements-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(135deg, #ff8a50, #ffb74d);
+            color: #e65100;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #ff8a50;
+            animation: achievementGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes achievementGlow {
+            from { box-shadow: 0 4px 15px rgba(255, 138, 80, 0.3); }
+            to { box-shadow: 0 8px 25px rgba(255, 138, 80, 0.6); }
+        }
+        
+        .achievement-icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-popup {
+            position: fixed;
+            top: 70px;
+            right: 10px;
+            background: #ff8a50;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 138, 80, 0.4);
+            z-index: 1001;
+            animation: slideInBounce 0.6s ease-out;
+            border: 2px solid #ffb74d;
+            max-width: 250px;
+        }
+        
+        @keyframes slideInBounce {
+            0% { transform: translateX(400px); opacity: 0; }
+            60% { transform: translateX(-20px); opacity: 1; }
+            100% { transform: translateX(0); }
+        }
+        
+        .achievement-popup-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
         }
         
         .action-buttons {
@@ -319,33 +599,65 @@
             margin-top: 20px;
         }
         
-        .image-container {
-            background: #f5f5f5;
-            border: 2px dashed #ccc;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
+        .table-container {
+            overflow-x: auto;
+            margin: 15px 0;
         }
         
-        .image-fallback {
-            background: #fff3e0;
-            padding: 20px;
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
             border-radius: 8px;
-            color: #e65100;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .data-table th {
+            background: #e65100;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .data-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
             font-weight: 500;
         }
-
-        @keyframes slideInBounce {
-            0% { transform: translateX(400px); opacity: 0; }
-            60% { transform: translateX(-20px); opacity: 1; }
-            100% { transform: translateX(0); }
+        
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .data-table tr:hover {
+            background: #fff3e0;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-30px); }
-            60% { transform: translateY(-15px); }
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+        
+        .fraction .numerator {
+            display: block;
+            border-bottom: 2px solid #333;
+            padding-bottom: 2px;
+        }
+        
+        .fraction .denominator {
+            display: block;
+            padding-top: 2px;
+        }
+
+        .math-expression {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.3em;
+            margin: 10px 0;
         }
         
         @media (max-width: 768px) {
@@ -358,8 +670,30 @@
                 font-size: 2em;
             }
             
+            .main-stats {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
             .options {
                 grid-template-columns: 1fr;
+            }
+            
+            .timer-display {
+                position: fixed;
+                top: 5px;
+                right: 5px;
+                padding: 8px 15px;
+                font-size: 1em;
+                border-radius: 20px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            }
+            
+            .achievement-popup {
+                top: 55px;
+                right: 5px;
+                left: 5px;
+                max-width: none;
+                padding: 12px;
             }
             
             .difficulty-badges {
@@ -370,6 +704,14 @@
             
             .question-header {
                 flex-direction: column;
+            }
+            
+            .final-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            body {
+                padding: 10px 5px 5px 5px;
             }
         }
     </style>
@@ -386,7 +728,7 @@
     <div class="container">
         <div class="header">
             <h1 class="title">📊 Pengurusan Data</h1>
-            <p class="subtitle">Permainan Matematik Interaktif - Piktograf, Carta Palang dan Interpretasi Data</p>
+            <p class="subtitle">Permainan Matematik Interaktif - Piktograf dan Carta Palang</p>
         </div>
 
         <div class="main-stats">
@@ -407,12 +749,19 @@
                 <div class="stat-label">Berturut</div>
             </div>
             <div class="stat-box">
-                <div class="stat-number" id="levelDisplay" style="color: #ff5722;">1</div>
+                <div class="stat-number" id="levelDisplay" style="color: #ff8a50;">1</div>
                 <div class="stat-label">Tahap</div>
             </div>
             <div class="stat-box">
                 <div class="stat-number" id="timerStat" style="color: #2196f3;">2:00</div>
                 <div class="stat-label">Masa</div>
+            </div>
+        </div>
+
+        <div class="experience-bar">
+            <div class="exp-label" id="expLabel">Pengalaman: 0 / 100</div>
+            <div class="exp-bar">
+                <div class="exp-fill" id="expFill"></div>
             </div>
         </div>
 
@@ -430,37 +779,22 @@
                 <div class="question-header">
                     <div class="question-content">
                         <div class="question-text" id="questionText">
-                            Dalam piktograf, jika satu simbol 📚 mewakili 3 buah buku, berapakah bilangan buku yang diwakili oleh 4 simbol?
+                            Loading question...
                         </div>
-                        <div id="imageContainer" style="display: none;"></div>
+                        <div id="imageContainer"></div>
                     </div>
                     <div class="difficulty-badges">
-                        <div class="difficulty-badge difficulty-easy" id="difficultyBadge">Mudah</div>
-                        <div class="points-badge" id="pointsBadge">10 mata</div>
-                        <div class="category-badge" id="categoryBadge">Membaca Piktograf</div>
+                        <div class="difficulty-badge" id="difficultyBadge">Sederhana</div>
+                        <div class="points-badge" id="pointsBadge">20 mata</div>
+                        <div class="category-badge" id="categoryBadge">Topik</div>
                     </div>
                 </div>
                 
                 <div class="options" id="optionsContainer">
-                    <button class="option-btn" onclick="selectAnswer('9 buku')">
-                        <div class="option-label">Pilihan A</div>
-                        <div class="option-text">9 buku</div>
-                    </button>
-                    <button class="option-btn" onclick="selectAnswer('15 buku')">
-                        <div class="option-label">Pilihan B</div>
-                        <div class="option-text">15 buku</div>
-                    </button>
-                    <button class="option-btn" onclick="selectAnswer('12 buku')">
-                        <div class="option-label">Pilihan C</div>
-                        <div class="option-text">12 buku</div>
-                    </button>
-                    <button class="option-btn" onclick="selectAnswer('6 buku')">
-                        <div class="option-label">Pilihan D</div>
-                        <div class="option-text">6 buku</div>
-                    </button>
+                    <!-- Options will be populated by JavaScript -->
                 </div>
 
-                <div id="feedback" class="feedback"></div>
+                <div id="feedback" style="display: none;"></div>
                 
                 <div class="action-buttons" id="actionButtons">
                     <button class="btn btn-secondary" onclick="skipQuestion()">Langkau Soalan</button>
@@ -470,279 +804,271 @@
     </div>
 
     <script>
-        // Game data
+        // All 20 questions about data management - pictographs and bar charts
         const questions = [
+            // Simple questions (1-10)
             {
                 id: 1,
-                category: 'pictograph_reading',
+                category: 'pictograph_basics',
                 difficulty: 'easy',
-                question: 'Dalam piktograf, jika satu simbol 📚 mewakili 3 buah buku, berapakah bilangan buku yang diwakili oleh 4 simbol?',
-                answer: '12 buku',
-                options: ['9 buku', '15 buku', '12 buku', '6 buku'],
-                explanation: '4 simbol × 3 buku setiap simbol = 12 buku'
+                question: 'Dalam piktograf, jika 🍎 mewakili 5 buah epal, berapa epal yang diwakili oleh 🍎🍎🍎?',
+                answer: '15 buah epal',
+                options: ['10 buah epal', '15 buah epal', '20 buah epal', '8 buah epal'],
+                explanation: '3 simbol × 5 epal setiap simbol = 15 buah epal'
             },
             {
                 id: 2,
-                category: 'bar_chart_reading',
+                category: 'pictograph_basics',
                 difficulty: 'easy',
-                question: 'Carta palang menunjukkan Pasukan A mendapat 60 markah dan Pasukan B mendapat 40 markah. Berapakah perbezaan markah antara kedua-dua pasukan?',
-                answer: '20 markah',
-                options: ['25 markah', '20 markah', '15 markah', '30 markah'],
-                explanation: '60 - 40 = 20 markah perbezaan',
-                image: {
-                    src: 'images/team-scores-comparison.png',
-                    alt: 'Carta palang perbandingan markah pasukan',
-                    description: 'Carta palang menunjukkan Pasukan A (60 markah) dan Pasukan B (40 markah)'
-                }
+                question: 'Sebuah piktograf menunjukkan ⭐ mewakili 4 orang pelajar. Berapa simbol diperlukan untuk mewakili 24 orang pelajar?',
+                answer: '6 simbol',
+                options: ['5 simbol', '6 simbol', '7 simbol', '8 simbol'],
+                explanation: '24 ÷ 4 = 6 simbol diperlukan'
             },
             {
                 id: 3,
-                category: 'pictograph_reading',
-                difficulty: 'medium',
-                question: 'Piktograf menunjukkan Ali mempunyai 2 simbol ⭐, Siti mempunyai 3 simbol ⭐, dan Raj mempunyai 4 simbol ⭐. Jika setiap ⭐ = 5 mata, berapakah jumlah mata mereka?',
-                answer: '45 mata',
-                options: ['40 mata', '45 mata', '50 mata', '35 mata'],
-                explanation: 'Ali: 2×5=10, Siti: 3×5=15, Raj: 4×5=20. Jumlah: 10+15+20=45 mata',
-                image: {
-                    src: 'images/star-points-pictograph.png',
-                    alt: 'Piktograf mata dengan simbol bintang',
-                    description: 'Piktograf menunjukkan Ali (2 bintang), Siti (3 bintang), Raj (4 bintang). Setiap bintang = 5 mata'
-                }
+                category: 'bar_chart_reading',
+                difficulty: 'easy',
+                question: 'Dalam carta palang, jika ketinggian palang bagi buah mangga ialah 8 unit dan setiap unit mewakili 5 buah, berapa buah mangga keseluruhan?',
+                answer: '40 buah',
+                options: ['35 buah', '40 buah', '45 buah', '50 buah'],
+                explanation: '8 unit × 5 buah setiap unit = 40 buah mangga'
             },
             {
                 id: 4,
-                category: 'data_calculation',
-                difficulty: 'easy',
-                question: 'Jika carta palang menunjukkan 4 orang suka epal, 6 orang suka oren, dan 2 orang suka pisang, berapakah jumlah orang yang ditanya?',
-                answer: '12 orang',
-                options: ['10 orang', '12 orang', '14 orang', '8 orang'],
-                explanation: '4 + 6 + 2 = 12 orang',
-                image: {
-                    src: 'images/fruit-preferences-chart.png',
-                    alt: 'Carta palang pilihan buah-buahan',
-                    description: 'Carta palang menunjukkan pilihan buah: Epal (4 orang), Oren (6 orang), Pisang (2 orang)'
-                }
+                category: 'pictograph_interpretation',
+                difficulty: 'medium',
+                question: 'Dalam piktograf jenis kenderaan, kereta diwakili oleh 🚗🚗🚗🚗 dan motosikal oleh 🏍️🏍️. Jika setiap simbol mewakili 6 kenderaan, berapa banyak lagi kereta daripada motosikal?',
+                answer: '12 kenderaan',
+                options: ['6 kenderaan', '12 kenderaan', '18 kenderaan', '24 kenderaan'],
+                explanation: 'Kereta: 4 × 6 = 24, Motosikal: 2 × 6 = 12. Beza: 24 - 12 = 12 kenderaan'
             },
             {
                 id: 5,
-                category: 'percentage_from_data',
-                difficulty: 'medium',
-                question: 'Daripada 20 pelajar, 8 orang memilih matematik sebagai subjek kegemaran. Berapakah peratus pelajar yang memilih matematik?',
-                answer: '40%',
-                options: ['35%', '45%', '40%', '30%'],
-                explanation: '8 ÷ 20 × 100% = 40%'
+                category: 'bar_chart_comparison',
+                difficulty: 'easy',
+                question: 'Carta palang menunjukkan markah tiga pelajar: Ali (80), Siti (65), dan Ahmad (90). Siapa mendapat markah tertinggi?',
+                answer: 'Ahmad',
+                options: ['Ali', 'Siti', 'Ahmad', 'Sama markah'],
+                explanation: 'Ahmad mendapat markah tertinggi iaitu 90 markah'
             },
             {
                 id: 6,
-                category: 'bar_chart_reading',
-                difficulty: 'easy',
-                question: 'Carta palang menunjukkan penjualan: Januari (50), Februari (75), Mac (60). Bulan mana mencatatkan penjualan tertinggi?',
-                answer: 'Februari',
-                options: ['Januari', 'Mac', 'Februari', 'Sama sahaja'],
-                explanation: 'Februari mempunyai nilai tertinggi iaitu 75',
-                image: {
-                    src: 'images/monthly-sales-bar-chart.png',
-                    alt: 'Carta palang penjualan bulanan',
-                    description: 'Carta palang menunjukkan penjualan: Januari (50), Februari (75), Mac (60)'
-                }
+                category: 'pictograph_calculation',
+                difficulty: 'medium',
+                question: 'Piktograf bunga ros menunjukkan 🌹🌹🌹🌹🌹 untuk merah dan 🌹🌹🌹 untuk putih. Jika setiap simbol = 8 tangkai, berapa jumlah bunga keseluruhan?',
+                answer: '64 tangkai',
+                options: ['56 tangkai', '64 tangkai', '72 tangkai', '48 tangkai'],
+                explanation: 'Merah: 5 × 8 = 40, Putih: 3 × 8 = 24. Jumlah: 40 + 24 = 64 tangkai'
             },
             {
                 id: 7,
-                category: 'data_comparison',
-                difficulty: 'medium',
-                question: 'Piktograf menunjukkan Sekolah A: 6 simbol, Sekolah B: 4 simbol, Sekolah C: 8 simbol. Jika setiap simbol = 10 pelajar, berapa ramai pelajar di Sekolah C berbanding Sekolah A?',
-                answer: '20 lebih ramai',
-                options: ['15 lebih ramai', '25 lebih ramai', '20 lebih ramai', '30 lebih ramai'],
-                explanation: 'Sekolah C: 8×10=80, Sekolah A: 6×10=60. Beza: 80-60=20 pelajar',
-                image: {
-                    src: 'images/school-comparison-pictograph.png',
-                    alt: 'Piktograf perbandingan sekolah',
-                    description: 'Piktograf menunjukkan Sekolah A (6 simbol), Sekolah B (4 simbol), Sekolah C (8 simbol). 1 simbol = 10 pelajar'
-                }
+                category: 'bar_chart_interpretation',
+                difficulty: 'easy',
+                question: 'Carta palang jualan ais krim: Vanila (25 unit), Coklat (30 unit), Strawberi (20 unit). Berapakah jumlah jualan keseluruhan?',
+                answer: '75 unit',
+                options: ['70 unit', '75 unit', '80 unit', '85 unit'],
+                explanation: '25 + 30 + 20 = 75 unit ais krim'
             },
             {
                 id: 8,
-                category: 'pictograph_creation',
+                category: 'pictograph_percentage',
                 difficulty: 'medium',
-                question: 'Untuk mewakili 18 buah kereta dalam piktograf, berapa simbol 🚗 diperlukan jika setiap simbol mewakili 6 buah kereta?',
-                answer: '3 simbol',
-                options: ['2 simbol', '4 simbol', '3 simbol', '5 simbol'],
-                explanation: '18 ÷ 6 = 3 simbol diperlukan'
+                question: 'Dalam piktograf 20 orang pelajar, jika 🧑🧑🧑🧑 suka matematik (setiap simbol = 1 orang), berapa peratus pelajar suka matematik?',
+                answer: '20%',
+                options: ['15%', '20%', '25%', '30%'],
+                explanation: '4 orang daripada 20 orang = 4/20 = 20%'
             },
             {
                 id: 9,
-                category: 'data_interpretation',
+                category: 'bar_chart_difference',
                 difficulty: 'easy',
-                question: 'Carta menunjukkan 15 pelajar suka nasi lemak, 10 pelajar suka mee goreng, 5 pelajar suka roti canai. Makanan mana paling popular?',
-                answer: 'Nasi lemak',
-                options: ['Mee goreng', 'Nasi lemak', 'Roti canai', 'Semua sama'],
-                explanation: 'Nasi lemak mempunyai bilangan pelajar terbanyak iaitu 15 orang'
+                question: 'Carta palang menunjukkan hujan: Januari (120mm), Februari (80mm), Mac (150mm). Berapa perbezaan hujan antara Mac dan Februari?',
+                answer: '70mm',
+                options: ['60mm', '70mm', '80mm', '90mm'],
+                explanation: 'Mac - Februari = 150mm - 80mm = 70mm'
             },
             {
                 id: 10,
-                category: 'bar_chart_calculation',
+                category: 'pictograph_symbols',
                 difficulty: 'medium',
-                question: 'Carta palang menunjukkan markah ujian: Ahmad (80), Fatimah (90), Kumar (85). Berapakah purata markah mereka?',
-                answer: '85 markah',
-                options: ['80 markah', '87 markah', '85 markah', '90 markah'],
-                explanation: '(80 + 90 + 85) ÷ 3 = 255 ÷ 3 = 85 markah',
-                image: {
-                    src: 'images/test-scores-bar-chart.png',
-                    alt: 'Carta palang markah ujian',
-                    description: 'Carta palang menunjukkan markah ujian: Ahmad (80), Fatimah (90), Kumar (85)'
-                }
+                question: 'Jika piktograf menunjukkan 36 ekor ayam menggunakan 9 simbol 🐔, berapa ekor ayam yang diwakili oleh setengah simbol?',
+                answer: '2 ekor',
+                options: ['1 ekor', '2 ekor', '3 ekor', '4 ekor'],
+                explanation: '36 ÷ 9 = 4 ekor setiap simbol. Setengah simbol = 4 ÷ 2 = 2 ekor'
             },
+
+            // Complex word problems (11-20)
             {
                 id: 11,
-                category: 'pictograph_problem',
+                category: 'pictograph_analysis',
                 difficulty: 'hard',
-                question: 'Piktograf menunjukkan bilangan buku yang dibaca oleh 4 orang rakan dalam sebulan. Sebanyak 48 buah buku telah dibaca oleh mereka kesemuanya. Jika setiap simbol 📚 mewakili 3 buah buku, berapakah bilangan simbol untuk mewakili buku yang dibaca oleh Raveena jika dia membaca 9 buah buku? Kira peratusan buku yang dibaca oleh Sherry jika dia membaca 12 buah buku.',
-                answer: '3 simbol, 25%',
-                options: ['4 simbol, 30%', '2 simbol, 20%', '3 simbol, 25%', '5 simbol, 35%'],
-                explanation: 'Raveena: 9 buku ÷ 3 = 3 simbol. Sherry: 12/48 × 100% = 25%',
+                question: 'Zikri menyiapkan piktograf bilangan buku yang dibaca oleh empat rakan. Sebanyak 48 buah buku telah dibaca oleh mereka. Berdasarkan piktograf yang ditunjukkan: a) Berapa bilangan simbol untuk mewakili buku Raveena? b) Kira peratus buku yang dibaca oleh Sherry.',
+                subquestions: [
+                    'a) Bilangan simbol untuk Raveena',
+                    'b) Peratus buku dibaca oleh Sherry'
+                ],
                 image: {
                     src: 'images/books-read-pictograph.png',
                     alt: 'Piktograf bilangan buku yang dibaca',
-                    description: 'Piktograf menunjukkan bilangan buku yang dibaca oleh 4 rakan dengan simbol buku'
-                }
+                    description: 'Piktograf menunjukkan: Sherry (4 simbol buku), Qalisha (5 simbol buku), Swee Ping (4 simbol buku), Raveena (3 simbol buku). Setiap simbol mewakili 3 buah buku.'
+                },
+                answer: '3 simbol, 25%',
+                options: ['2 simbol, 20%', '3 simbol, 25%', '4 simbol, 30%', '5 simbol, 35%'],
+                explanation: 'a) Raveena ada 3 simbol. b) Sherry: 4×3=12 buku. Peratus: (12/48)×100% = 25%'
             },
             {
                 id: 12,
-                category: 'bar_chart_problem',
+                category: 'bar_chart_qualification',
                 difficulty: 'hard',
-                question: 'Carta palang menunjukkan markah kuiz matematik empat pasukan: Meranti (75), Seraya (60), Jati (85), Merbau (70). Setiap pasukan kemudian diberikan 15 markah tambahan sebagai bonus. Senaraikan pasukan yang memperoleh markah terkini melebihi 100. Adakah jumlah markah keseluruhan terkini sama dengan 400?',
-                answer: 'Jati sahaja, Tidak (350)',
-                options: ['Jati sahaja, Tidak (350)', 'Jati dan Meranti, Ya (400)', 'Semua pasukan, Tidak (380)', 'Tiada, Tidak (320)'],
-                explanation: 'Selepas bonus +15: Meranti (90), Seraya (75), Jati (100), Merbau (85). Hanya Jati ≥100. Jumlah: 350',
+                question: 'Carta palang tidak lengkap menunjukkan skor Zariq dalam ujian kemahiran bola baling. Syarat menjadi pemain sekolah: lulus ujian kemahiran dan dapat markah melebihi 45. Berjayakah Zariq dipilih jika dia dapat 8 markah untuk hantaran lantun?',
                 image: {
-                    src: 'images/quiz-scores-with-bonus.png',
-                    alt: 'Carta palang markah kuiz dengan bonus',
-                    description: 'Carta palang menunjukkan markah kuiz matematik 4 pasukan dengan bonus markah'
-                }
+                    src: 'images/zariq-sports-skills.png',
+                    alt: 'Carta palang ujian kemahiran bola baling Zariq',
+                    description: 'Carta palang menunjukkan skor Zariq: Lontar (8 markah), Sambut (10 markah), Halang (7 markah), Jaring (10 markah), Lantun (kosong - untuk diisi 8 markah)'
+                },
+                answer: 'Ya, berjaya',
+                options: ['Tidak berjaya', 'Ya, berjaya', 'Data tidak mencukupi', 'Perlu ujian tambahan'],
+                explanation: 'Jumlah markah: 8+10+7+10+8 = 43 markah. Kurang dari 45, jadi tidak berjaya dipilih.'
             },
             {
                 id: 13,
-                category: 'data_collection_problem',
+                category: 'ball_sales_analysis',
                 difficulty: 'hard',
-                question: 'Kedai Sukan NDS menjual bola: Januari (10 biji), Februari (16 biji), Mac (12 biji), April (10 biji). Setiap bola dijual RM50. Berapakah jumlah bola yang dijual pada dua bulan pertama? Kira beza bilangan bola yang dijual antara Februari dengan April. Kira jumlah harga jualan bola bagi empat bulan itu.',
-                answer: '26 biji, 6 biji, RM2400',
-                options: ['24 biji, 5 biji, RM2200', '28 biji, 7 biji, RM2500', '26 biji, 6 biji, RM2400', '30 biji, 8 biji, RM2600'],
-                explanation: 'Dua bulan pertama: 10+16=26 biji. Beza: 16-10=6 biji. Jumlah: 48 biji × RM50 = RM2400',
+                question: 'Kedai Sukan NDS menjual bola: Januari (10 biji), Februari (16 biji), Mac (12 biji), April (10 biji). Harga setiap bola RM50. a) Jumlah bola dua bulan pertama? b) Beza jualan Februari-April? c) Jumlah harga 4 bulan?',
+                subquestions: [
+                    'a) Jumlah bola Januari + Februari',
+                    'b) Beza jualan Februari dengan April',
+                    'c) Jumlah harga keseluruhan 4 bulan'
+                ],
                 image: {
-                    src: 'images/sports-store-sales-chart.png',
-                    alt: 'Data penjualan bola kedai sukan',
-                    description: 'Data penjualan bola kedai sukan dengan harga RM50 setiap bola'
-                }
+                    src: 'images/ball-sales-chart.png',
+                    alt: 'Carta jualan bola kedai sukan',
+                    description: 'Carta palang menunjukkan jualan bola bulanan: Januari (10), Februari (16), Mac (12), April (10). Harga setiap bola RM50.'
+                },
+                answer: '26 biji, 6 biji, RM2400',
+                options: ['24 biji, 5 biji, RM2200', '26 biji, 6 biji, RM2400', '28 biji, 7 biji, RM2600', '25 biji, 8 biji, RM2500'],
+                explanation: 'a) 10+16=26 biji. b) 16-10=6 biji. c) Jumlah: 48 biji × RM50 = RM2400'
             },
             {
                 id: 14,
-                category: 'stamp_collection_problem',
+                category: 'stamp_collection_analysis',
                 difficulty: 'hard',
-                question: 'Syahir ada 30 keping setem. Francis ada 15 keping setem lebih daripada Syahir. Setem Rishi pula kurang 10 keping daripada Francis. Xin Feng ada 10 keping setem lebih daripada Syahir. Berapakah bilangan setem Francis, Rishi dan Xin Feng? Kira jumlah setem mereka berempat. Berapakah peratus setem Syahir?',
-                answer: '45, 35, 40; 150; 20%',
-                options: ['40, 30, 35; 135; 22%', '45, 35, 40; 150; 20%', '50, 40, 45; 165; 18%', '35, 25, 30; 120; 25%'],
-                explanation: 'Francis: 30+15=45, Rishi: 45-10=35, Xin Feng: 30+10=40. Jumlah: 30+45+35+40=150. Syahir: 30/150×100%=20%'
+                question: 'Koleksi setem: Syahir (30 keping), Francis (45 keping - 15 lebih dari Syahir), Rishi (35 keping - 10 kurang dari Francis), Xin Feng (40 keping - 10 lebih dari Syahir). a) Sahkan bilangan setem setiap orang. b) Jumlah setem mereka. c) Peratus setem Syahir.',
+                subquestions: [
+                    'a) Bilangan setem Francis, Rishi, Xin Feng',
+                    'b) Jumlah setem keempat-empat mereka',
+                    'c) Peratus setem yang dimiliki Syahir'
+                ],
+                image: {
+                    src: 'images/stamp-collection-data.png',
+                    alt: 'Data koleksi setem empat orang kawan',
+                    description: 'Carta menunjukkan: Syahir (30 keping), Francis (30+15=45), Rishi (45-10=35), Xin Feng (30+10=40)'
+                },
+                answer: '45, 35, 40; 150 keping; 20%',
+                options: ['40, 30, 35; 135 keping; 22%', '45, 35, 40; 150 keping; 20%', '50, 40, 45; 165 keping; 18%', '42, 32, 38; 142 keping; 21%'],
+                explanation: 'a) Francis:45, Rishi:35, Xin Feng:40. b) 30+45+35+40=150. c) 30/150×100%=20%'
             },
             {
                 id: 15,
-                category: 'fishing_competition_problem',
+                category: 'quiz_scores_comparison',
                 difficulty: 'hard',
-                question: 'Pertandingan memancing melibatkan 5 peserta. Piktograf menunjukkan bilangan ikan yang dipancing, dengan setiap simbol 🐟 mewakili 2 ekor ikan. Jumlah ikan yang dipancing ialah 34 ekor. Jika Adin memancing 12 ekor ikan dan diisytiharkan sebagai pemenang, anggarkan bilangan simbol untuk Adin. Buktikan bilangan ikan yang dipancing oleh Sam dan Tim adalah sama jika mereka masing-masing mendapat 4 ekor.',
-                answer: '6 simbol, 4 ekor setiap satu',
-                options: ['5 simbol, 3 ekor setiap satu', '7 simbol, 5 ekor setiap satu', '6 simbol, 4 ekor setiap satu', '8 simbol, 6 ekor setiap satu'],
-                explanation: 'Adin: 12÷2=6 simbol. Sam dan Tim: kedua-duanya 4 ekor, sama',
+                question: 'Carta palang markah kuiz empat pasukan. Setiap pasukan dapat 15 markah tambahan. i) Senarai pasukan markah terkini >100. ii) Adakah jumlah markah terkini = 400?',
                 image: {
-                    src: 'images/fishing-competition-results.png',
-                    alt: 'Piktograf pertandingan memancing',
-                    description: 'Piktograf pertandingan memancing dengan simbol ikan untuk 5 peserta'
-                }
+                    src: 'images/team-quiz-scores.png',
+                    alt: 'Carta palang markah kuiz empat pasukan',
+                    description: 'Carta palang menunjukkan markah asal: Meranti (60), Jati (80), Seraya (70), Merbau (75). Setiap pasukan tambah 15 markah.'
+                },
+                answer: 'Jati, Merbau; Tidak, 415',
+                options: ['Jati sahaja; Ya, 400', 'Jati, Merbau; Tidak, 415', 'Semua pasukan; Tidak, 420', 'Meranti, Jati; Ya, 400'],
+                explanation: 'Markah terkini: Meranti(75), Jati(95), Seraya(85), Merbau(90). Tiada >100. Jumlah: 345+60=405'
             },
             {
                 id: 16,
-                category: 'student_performance_analysis',
+                category: 'fishing_competition_analysis',
                 difficulty: 'hard',
-                question: 'Analisis prestasi pelajar dalam tiga kuiz: Kelvin (48/60), Dina (24/32), Prem Singh (81/90). Siapakah yang mendapat peratus markah paling tinggi? Tunjukkan langkah pengiraan untuk semua pelajar.',
-                answer: 'Prem Singh (90%)',
-                options: ['Kelvin (80%)', 'Dina (75%)', 'Prem Singh (90%)', 'Semua sama'],
-                explanation: 'Kelvin: 48/60=80%, Dina: 24/32=75%, Prem Singh: 81/90=90%. Prem Singh tertinggi.',
+                question: 'Piktograf pertandingan memancing 5 peserta. Jumlah ikan 34 ekor. Adin pemenang dengan 12 ekor. Setiap simbol = 2 ekor. i) Anggaran ikan Adin dari piktograf. ii) Buktikan Sam dan Tim sama bilangan ikan.',
                 image: {
-                    src: 'images/student-quiz-analysis-table.png',
-                    alt: 'Analisis prestasi kuiz pelajar',
-                    description: 'Jadual prestasi kuiz tiga pelajar dengan pengiraan peratus'
-                }
+                    src: 'images/fishing-competition-pictograph.png',
+                    alt: 'Piktograf pertandingan memancing',
+                    description: 'Piktograf menunjukkan: Sam (2 simbol ikan), Adin (6 simbol ikan), Tim (2 simbol ikan), Ram (4 simbol ikan), Ong (3 simbol ikan). Setiap simbol = 2 ekor ikan.'
+                },
+                answer: '12 ekor; Ya, sama 4 ekor',
+                options: ['10 ekor; Tidak sama', '12 ekor; Ya, sama 4 ekor', '14 ekor; Ya, sama 6 ekor', '8 ekor; Tidak sama'],
+                explanation: 'i) Adin: 6 simbol × 2 = 12 ekor. ii) Sam: 2×2=4, Tim: 2×2=4. Sama bilangan.'
             },
             {
                 id: 17,
-                category: 'sports_achievement_data',
+                category: 'library_data_analysis',
                 difficulty: 'hard',
-                question: 'Carta palang menunjukkan skor Zariq dalam ujian kemahiran bola baling: Lontar (8), Sambut (9), Halang (6), Jaring (10). Syarat untuk menjadi pemain sekolah: jumlah markah melebihi 45. Berjayakah Zariq dipilih jika dia mendapat 8 markah dalam kemahiran hantaran lantun?',
-                answer: 'Tidak, jumlah 41',
-                options: ['Tidak, kurang markah', 'Ya, jumlah 41 markah', 'Tidak, gagal satu ujian', 'Ya, lebih 45 markah'],
-                explanation: 'Jumlah: 8+9+6+10+8=41 markah. Kurang daripada 45, jadi tidak layak.',
+                question: 'Perpustakaan sekolah: pinjaman buku Matematik (150), Sains (200), Sejarah (100), Bahasa (250). Buat carta palang dan jawab: a) Jumlah pinjaman. b) Perbezaan tertinggi-terendah. c) Peratus buku Matematik.',
                 image: {
-                    src: 'images/sports-skills-assessment-chart.png',
-                    alt: 'Carta skor ujian kemahiran bola baling',
-                    description: 'Carta palang skor ujian kemahiran bola baling Zariq dengan syarat kelayakan'
-                }
+                    src: 'images/library-book-loans.png',
+                    alt: 'Data pinjaman buku perpustakaan mengikut subjek',
+                    description: 'Carta palang menunjukkan pinjaman buku: Matematik (150), Sains (200), Sejarah (100), Bahasa (250)'
+                },
+                answer: '700 buku; 150 buku; 21.4%',
+                options: ['650 buku; 120 buku; 23%', '700 buku; 150 buku; 21.4%', '750 buku; 180 buku; 20%', '680 buku; 140 buku; 22%'],
+                explanation: 'a) 150+200+100+250=700. b) 250-100=150. c) 150/700×100%=21.4%'
             },
             {
                 id: 18,
-                category: 'library_data_analysis',
+                category: 'temperature_data_analysis',
                 difficulty: 'hard',
-                question: 'Perpustakaan sekolah mengumpul data kunjungan mingguan: Isnin (25), Selasa (30), Rabu (20), Khamis (35), Jumaat (15). Hari manakah mencatatkan kunjungan paling ramai dan paling sedikit? Kira purata kunjungan harian. Berapa peratus kunjungan pada hari Khamis?',
-                answer: 'Khamis (35), Jumaat (15); 25; 28%',
-                options: ['Selasa (30), Rabu (20); 23; 30%', 'Khamis (35), Jumaat (15); 25; 28%', 'Isnin (25), Jumaat (15); 27; 25%', 'Khamis (35), Rabu (20); 26; 32%'],
-                explanation: 'Tertinggi: Khamis (35), Terendah: Jumaat (15). Purata: 125÷5=25. Khamis: 35/125×100%=28%',
+                question: 'Suhu mingguan (°C): Isnin (32), Selasa (29), Rabu (35), Khamis (31), Jumaat (33), Sabtu (30), Ahad (28). a) Purata suhu minggu. b) Hari paling sejuk dan panas. c) Julat suhu.',
                 image: {
-                    src: 'images/library-weekly-traffic.png',
-                    alt: 'Carta kunjungan perpustakaan mingguan',
-                    description: 'Carta palang kunjungan perpustakaan mingguan'
-                }
+                    src: 'images/weekly-temperature-chart.png',
+                    alt: 'Carta palang suhu harian selama seminggu',
+                    description: 'Carta palang menunjukkan suhu: Isnin(32°C), Selasa(29°C), Rabu(35°C), Khamis(31°C), Jumaat(33°C), Sabtu(30°C), Ahad(28°C)'
+                },
+                answer: '31.1°C; Ahad, Rabu; 7°C',
+                options: ['30.5°C; Selasa, Rabu; 6°C', '31.1°C; Ahad, Rabu; 7°C', '32°C; Ahad, Jumaat; 8°C', '29.8°C; Sabtu, Rabu; 5°C'],
+                explanation: 'a) (32+29+35+31+33+30+28)÷7=31.1°C. b) Sejuk:Ahad(28°C), Panas:Rabu(35°C). c) 35-28=7°C'
             },
             {
                 id: 19,
-                category: 'school_canteen_survey',
+                category: 'school_transport_survey',
                 difficulty: 'hard',
-                question: 'Tinjauan makanan kegemaran di kantin sekolah melibatkan 200 pelajar: Nasi lemak (80), Mee goreng (60), Roti canai (40), Lain-lain (20). Makanan manakah kurang popular daripada 25% daripada responden?',
-                answer: 'Roti canai & lain-lain',
-                options: ['Hanya lain-lain', 'Mee goreng & roti canai', 'Roti canai & lain-lain', 'Semua popular'],
-                explanation: '25% daripada 200 = 50 pelajar. Roti canai (40) dan lain-lain (20) kedua-duanya kurang daripada 50.',
+                question: 'Survei pengangkutan sekolah 400 pelajar: Bas (180), Kereta (120), Berjalan kaki (60), Basikal (40). a) Buat piktograf (1 simbol = 20 pelajar). b) Mod pengangkutan popular. c) Peratus naik bas.',
                 image: {
-                    src: 'images/canteen-food-survey-results.png',
-                    alt: 'Tinjauan makanan kegemaran kantin',
-                    description: 'Carta pai dan jadual pilihan makanan 200 pelajar dengan peratusan'
-                }
+                    src: 'images/school-transport-survey.png',
+                    alt: 'Data pengangkutan pelajar ke sekolah',
+                    description: 'Carta pai menunjukkan: Bas (180 pelajar), Kereta (120 pelajar), Berjalan kaki (60 pelajar), Basikal (40 pelajar) dari 400 pelajar'
+                },
+                answer: '9, 6, 3, 2 simbol; Bas; 45%',
+                options: ['8, 5, 4, 3 simbol; Kereta; 40%', '9, 6, 3, 2 simbol; Bas; 45%', '10, 7, 4, 2 simbol; Bas; 50%', '7, 5, 3, 2 simbol; Kereta; 35%'],
+                explanation: 'a) Bas:9, Kereta:6, Berjalan:3, Basikal:2 simbol. b) Bas paling popular. c) 180/400×100%=45%'
             },
             {
                 id: 20,
-                category: 'environmental_data_project',
+                category: 'fruit_sales_comprehensive',
                 difficulty: 'hard',
-                question: 'Projek alam sekitar mengumpul data penggunaan air mingguan (liter): Rumah A (150), B (200), C (175), D (225), E (100). Matlamat: kurangkan penggunaan di bawah 180L. Berapa rumah yang mencapai matlamat? Kira purata penggunaan air. Rumah manakah perlu mengurangkan penggunaan paling banyak? Jika semua rumah berjaya kurangkan 10%, adakah purata mencapai matlamat?',
-                answer: '3 rumah, 170L, Rumah D, Ya',
-                options: ['2 rumah, 165L, Rumah B, Tidak', '4 rumah, 175L, Rumah D, Tidak', '3 rumah, 170L, Rumah D, Ya', '5 rumah, 180L, Rumah E, Ya'],
-                explanation: 'A(150), C(175), E(100) = 3 rumah <180L. Purata: 850÷5=170L. D(225) tertinggi. Purata baru: 170×0.9=153L < 180L',
+                question: 'Jualan buah-buahan (kg): Epal (45), Oren (60), Pisang (80), Anggur (35). Harga per kg: Epal (RM8), Oren (RM6), Pisang (RM4), Anggur (RM12). a) Jumlah berat. b) Jualan tertinggi nilai. c) Purata harga per kg.',
                 image: {
-                    src: 'images/water-usage-environmental-data.png',
-                    alt: 'Data projek alam sekitar penggunaan air',
-                    description: 'Carta penggunaan air 5 rumah dengan garis matlamat 180L dan pengiraan pengurangan 10%'
-                }
+                    src: 'images/fruit-sales-analysis.png',
+                    alt: 'Data jualan dan harga buah-buahan',
+                    description: 'Jadual menunjukkan jualan buah: Epal (45kg, RM8/kg), Oren (60kg, RM6/kg), Pisang (80kg, RM4/kg), Anggur (35kg, RM12/kg)'
+                },
+                answer: '220kg; Anggur RM420; RM7.50',
+                options: ['210kg; Epal RM360; RM7.25', '220kg; Anggur RM420; RM7.50', '230kg; Pisang RM320; RM8.00', '200kg; Oren RM360; RM7.00'],
+                explanation: 'a) 45+60+80+35=220kg. b) Nilai: Epal(RM360), Oren(RM360), Pisang(RM320), Anggur(RM420). c) (8+6+4+12)÷4=RM7.50'
             }
         ];
 
-        // Achievement definitions for data management
+        // Achievement definitions for Data Management
         const achievementDefinitions = [
-            { id: 'first_correct', name: 'Penganalisis Pemula!', description: 'Jawab soalan pertama dengan betul', icon: '📊' },
-            { id: 'streak_3', name: 'Dalam Ritma!', description: 'Jawab 3 soalan berturut-turut dengan betul', icon: '🔥' },
-            { id: 'streak_5', name: 'Ahli Statistik!', description: 'Jawab 5 soalan berturut-turut dengan betul', icon: '⚡' },
+            { id: 'first_correct', name: 'Penganalisis Pertama!', description: 'Jawab soalan pertama dengan betul', icon: '🌟' },
+            { id: 'streak_3', name: 'Pakar Data!', description: 'Jawab 3 soalan berturut-turut dengan betul', icon: '🔥' },
+            { id: 'streak_5', name: 'Juara Statistik!', description: 'Jawab 5 soalan berturut-turut dengan betul', icon: '⚡' },
             { id: 'quick_thinker', name: 'Pemikir Pantas!', description: 'Jawab dalam 10 saat', icon: '💨' },
             { id: 'level_2', name: 'Naik Tahap!', description: 'Capai tahap 2', icon: '🎯' },
-            { id: 'level_3', name: 'Pakar Data!', description: 'Capai tahap 3', icon: '👑' },
+            { id: 'level_3', name: 'Pakar Pengurusan Data!', description: 'Capai tahap 3', icon: '👑' },
             { id: 'perfect_score', name: 'Sempurna!', description: 'Dapatkan 100% markah', icon: '🏆' },
             { id: 'high_scorer', name: 'Pencapai Tinggi!', description: 'Kumpul 500+ mata', icon: '💎' },
-            { id: 'pictograph_master', name: 'Pakar Piktograf!', description: 'Jawab semua soalan piktograf dengan betul', icon: '🖼️' },
-            { id: 'chart_expert', name: 'Ahli Carta Palang!', description: 'Jawab semua soalan carta palang dengan betul', icon: '📊' },
-            { id: 'data_analyst', name: 'Penganalisis Data!', description: 'Jawab semua soalan interpretasi data dengan betul', icon: '🔍' },
-            { id: 'problem_solver', name: 'Penyelesai Masalah!', description: 'Jawab semua masalah berayat dengan betul', icon: '📝' }
+            { id: 'pictograph_master', name: 'Pakar Piktograf!', description: 'Jawab semua soalan piktograf dengan betul', icon: '📊' },
+            { id: 'bar_chart_expert', name: 'Ahli Carta Palang!', description: 'Jawab semua soalan carta palang dengan betul', icon: '📈' },
+            { id: 'data_analyst', name: 'Penganalisis Data!', description: 'Jawab semua soalan analisis dengan betul', icon: '🔍' },
+            { id: 'word_problem_solver', name: 'Penyelesai Masalah!', description: 'Jawab semua masalah berayat dengan betul', icon: '📝' }
         ];
 
         // Game state
@@ -753,11 +1079,132 @@
         let bestStreak = 0;
         let level = 1;
         let experience = 0;
-        let timeLeft = 120;
+        let timeLeft = 30;
         let timerInterval;
         let gameActive = true;
         let unlockedAchievements = [];
+        let filteredQuestions = [];
         let categoryStats = {};
+
+        // Shuffle array function for options only
+        function shuffleOptions(question) {
+            const correctAnswer = question.answer;
+            const shuffledOptions = [...question.options];
+            
+            // Shuffle the options array
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            
+            return {
+                ...question,
+                options: shuffledOptions,
+                answer: correctAnswer // Keep the correct answer unchanged
+            };
+        }
+
+        // Initialize game
+        function initGame() {
+            console.log('Initializing game...');
+            console.log('Questions array length:', questions.length);
+            
+            // Always use all questions, no filtering
+            filteredQuestions = [...questions];
+            console.log('Filtered questions length:', filteredQuestions.length);
+            
+            if (filteredQuestions.length > 0) {
+                loadQuestion();
+                startTimer();
+                updateDisplays();
+            } else {
+                console.error('No questions available!');
+            }
+        }
+
+        // Timer functions
+        function startTimer() {
+            clearInterval(timerInterval);
+            timeLeft = 120; // 2 minutes
+            gameActive = true;
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timerDisplay');
+            const timerBar = document.getElementById('timerBar');
+            const timerStat = document.getElementById('timerStat');
+            
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            timerEl.textContent = `⏰ ${timeText}`;
+            timerStat.textContent = timeText;
+            timerBar.style.width = `${(timeLeft / 120) * 100}%`;
+            
+            if (timeLeft <= 10) {
+                timerEl.className = 'timer-display danger';
+                timerBar.className = 'timer-fill danger';
+                timerStat.style.color = '#f44336';
+            } else if (timeLeft <= 30) {
+                timerEl.className = 'timer-display warning';
+                timerBar.className = 'timer-fill warning';
+                timerStat.style.color = '#ff9800';
+            } else {
+                timerEl.className = 'timer-display';
+                timerBar.className = 'timer-fill';
+                timerStat.style.color = '#2196f3';
+            }
+        }
+
+        // Points calculation
+        function calculatePoints(difficulty, timeRemaining, isCorrect) {
+            if (!isCorrect) return 0;
+            
+            let basePoints = 0;
+            switch (difficulty) {
+                case 'easy': basePoints = 10; break;
+                case 'medium': basePoints = 20; break;
+                case 'hard': basePoints = 30; break;
+                default: basePoints = 15;
+            }
+            
+            let timeBonus = timeRemaining > 60 ? 10 : timeRemaining > 30 ? 5 : 0;
+            let streakMultiplier = Math.min(streak + 1, 3);
+            
+            return Math.round((basePoints + timeBonus) * streakMultiplier);
+        }
+
+        // Level and experience
+        function updateLevel(newPoints) {
+            const newExperience = experience + newPoints;
+            const newLevel = Math.floor(newExperience / 100) + 1;
+            
+            if (newLevel > level) {
+                checkAchievements('level', newLevel);
+                showLevelUp(newLevel);
+            }
+            
+            experience = newExperience;
+            level = newLevel;
+        }
+
+        function showLevelUp(newLevel) {
+            const levelEl = document.getElementById('levelDisplay');
+            levelEl.style.animation = 'bounce 1s ease-out';
+            setTimeout(() => {
+                levelEl.style.animation = '';
+            }, 1000);
+        }
 
         // Achievement system
         function checkAchievements(type, value) {
@@ -765,7 +1212,7 @@
             
             switch (type) {
                 case 'first_correct':
-                    if (score === 1 && !unlockedAchievements.includes('first_correct')) {
+                    if (score === 0 && !unlockedAchievements.includes('first_correct')) {
                         newAchievements.push('first_correct');
                     }
                     break;
@@ -774,7 +1221,7 @@
                     if (value >= 5 && !unlockedAchievements.includes('streak_5')) newAchievements.push('streak_5');
                     break;
                 case 'quick_answer':
-                    if (timeLeft > 110 && !unlockedAchievements.includes('quick_thinker')) {
+                    if (timeLeft > 90 && !unlockedAchievements.includes('quick_thinker')) {
                         newAchievements.push('quick_thinker');
                     }
                     break;
@@ -804,20 +1251,29 @@
         }
 
         function checkCategoryMaster(newAchievements) {
-            const pictographQuestions = questions.filter(q => 
-                q.category.includes('pictograph') && categoryStats[q.id] === true
-            ).length;
-            const chartQuestions = questions.filter(q => 
-                q.category.includes('bar_chart') && categoryStats[q.id] === true
-            ).length;
+            const pictographQuestions = questions.filter(q => q.category.includes('pictograph'));
+            const barChartQuestions = questions.filter(q => q.category.includes('bar_chart'));
+            const analysisQuestions = questions.filter(q => q.category.includes('analysis'));
+            const wordProblemQuestions = questions.filter(q => q.id >= 11);
             
-            // Check if user has answered enough questions correctly in each category
-            if (!unlockedAchievements.includes('pictograph_master') && pictographQuestions >= 3) {
+            if (!unlockedAchievements.includes('pictograph_master') && 
+                pictographQuestions.every(q => categoryStats[q.id] === true)) {
                 newAchievements.push('pictograph_master');
             }
             
-            if (!unlockedAchievements.includes('chart_expert') && chartQuestions >= 3) {
-                newAchievements.push('chart_expert');
+            if (!unlockedAchievements.includes('bar_chart_expert') && 
+                barChartQuestions.every(q => categoryStats[q.id] === true)) {
+                newAchievements.push('bar_chart_expert');
+            }
+            
+            if (!unlockedAchievements.includes('data_analyst') && 
+                analysisQuestions.every(q => categoryStats[q.id] === true)) {
+                newAchievements.push('data_analyst');
+            }
+
+            if (!unlockedAchievements.includes('word_problem_solver') && 
+                wordProblemQuestions.every(q => categoryStats[q.id] === true)) {
+                newAchievements.push('word_problem_solver');
             }
         }
 
@@ -827,24 +1283,8 @@
 
             const popup = document.createElement('div');
             popup.className = 'achievement-popup';
-            popup.style.cssText = `
-                position: fixed;
-                top: 70px;
-                right: 10px;
-                background: #ff9800;
-                color: white;
-                padding: 15px;
-                border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
-                z-index: 1001;
-                animation: slideInBounce 0.6s ease-out;
-                border: 2px solid #ffb74d;
-                max-width: 250px;
-                font-weight: bold;
-            `;
-            
             popup.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <div class="achievement-popup-header">
                     <span style="font-size: 2em;">🏆</span>
                     <div>
                         <div style="font-weight: bold;">Pencapaian Baru!</div>
@@ -862,53 +1302,132 @@
             }, 3000);
         }
 
-        // Level and experience system
-        function updateLevel(newPoints) {
-            experience += newPoints;
-            const newLevel = Math.floor(experience / 100) + 1;
-            
-            if (newLevel > level) {
-                level = newLevel;
-                checkAchievements('level', newLevel);
-                showLevelUp(newLevel);
+        // Question loading
+        function loadQuestion() {
+            if (currentQuestion >= filteredQuestions.length) {
+                showResults();
+                return;
             }
+            
+            // Get question and shuffle its options only
+            const originalQ = filteredQuestions[currentQuestion];
+            const currentQ = shuffleOptions(originalQ);
+            
+            // Format question with subquestions if available
+            let questionHTML = currentQ.question;
+            if (currentQ.subquestions) {
+                questionHTML += '<br><br>';
+                currentQ.subquestions.forEach(subq => {
+                    questionHTML += subq + '<br>';
+                });
+            }
+            
+            document.getElementById('questionText').innerHTML = questionHTML;
+            
+            // Update difficulty and points badges
+            const difficultyBadge = document.getElementById('difficultyBadge');
+            const pointsBadge = document.getElementById('pointsBadge');
+            const categoryBadge = document.getElementById('categoryBadge');
+            
+            const difficultyText = {
+                'easy': 'Mudah',
+                'medium': 'Sederhana', 
+                'hard': 'Sukar'
+            };
+            
+            const pointsText = {
+                'easy': '10',
+                'medium': '20',
+                'hard': '30'
+            };
+
+            const categoryText = {
+                'pictograph_basics': 'Asas Piktograf',
+                'pictograph_interpretation': 'Tafsiran Piktograf',
+                'pictograph_calculation': 'Pengiraan Piktograf',
+                'pictograph_percentage': 'Peratus Piktograf',
+                'pictograph_symbols': 'Simbol Piktograf',
+                'pictograph_analysis': 'Analisis Piktograf',
+                'bar_chart_reading': 'Bacaan Carta Palang',
+                'bar_chart_comparison': 'Perbandingan Carta',
+                'bar_chart_interpretation': 'Tafsiran Carta',
+                'bar_chart_difference': 'Beza Carta Palang',
+                'bar_chart_qualification': 'Kelayakan Carta',
+                'ball_sales_analysis': 'Analisis Jualan',
+                'stamp_collection_analysis': 'Analisis Koleksi',
+                'quiz_scores_comparison': 'Perbandingan Markah',
+                'fishing_competition_analysis': 'Analisis Pertandingan',
+                'library_data_analysis': 'Data Perpustakaan',
+                'temperature_data_analysis': 'Data Suhu',
+                'school_transport_survey': 'Survei Pengangkutan',
+                'fruit_sales_comprehensive': 'Analisis Jualan Buah'
+            };
+            
+            difficultyBadge.textContent = difficultyText[currentQ.difficulty] || 'Sederhana';
+            difficultyBadge.className = `difficulty-badge difficulty-${currentQ.difficulty || 'medium'}`;
+            pointsBadge.textContent = `${pointsText[currentQ.difficulty] || '20'} mata`;
+            categoryBadge.textContent = categoryText[currentQ.category] || 'Pengurusan Data';
+            
+            // Store the current question with shuffled options for answer checking
+            window.currentQuestionData = currentQ;
+            
+            // Load image if present
+            loadQuestionImage(currentQ);
+            
+            // Update options (now shuffled)
+            loadOptions(currentQ);
+            
+            // Reset feedback and buttons
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('actionButtons').innerHTML = 
+                '<button class="btn btn-secondary" onclick="skipQuestion()">Langkau Soalan</button>';
+            
+            // Start timer
+            startTimer();
+            updateDisplays();
         }
 
-        function showLevelUp(newLevel) {
-            const levelEl = document.getElementById('levelDisplay');
-            if (levelEl) {
-                levelEl.style.animation = 'bounce 1s ease-out';
-                setTimeout(() => {
-                    levelEl.style.animation = '';
-                }, 1000);
-            }
-        }
-
-        // Timer functions
-        function startTimer() {
-            clearInterval(timerInterval);
-            timeLeft = 120;
-            gameActive = true;
+        function loadQuestionImage(question) {
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = '';
+            container.style.display = 'none';
             
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
+            if (question.image) {
+                const imageDiv = document.createElement('div');
+                imageDiv.className = 'image-container';
                 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    skipQuestion();
+                if (question.image.src) {
+                    const img = document.createElement('img');
+                    img.src = question.image.src;
+                    img.alt = question.image.alt;
+                    img.onerror = function() {
+                        imageDiv.innerHTML = `<div class="image-fallback">${question.image.description}</div>`;
+                    };
+                    imageDiv.appendChild(img);
+                } else if (question.image.description) {
+                    imageDiv.innerHTML = `<div class="image-fallback">${question.image.description}</div>`;
                 }
-            }, 1000);
+                
+                container.appendChild(imageDiv);
+                container.style.display = 'block';
+            }
         }
 
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        function loadOptions(question) {
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
             
-            document.getElementById('timerDisplay').textContent = `⏰ ${timeText}`;
-            document.getElementById('timerStat').textContent = timeText;
-            document.getElementById('timerBar').style.width = `${(timeLeft / 120) * 100}%`;
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `
+                    <div class="option-label">Pilihan ${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                btn.dataset.answer = option;
+                btn.onclick = () => selectAnswer(option);
+                container.appendChild(btn);
+            });
         }
 
         // Answer selection
@@ -918,38 +1437,32 @@
             clearInterval(timerInterval);
             gameActive = false;
             
-            const currentQ = questions[currentQuestion];
+            const currentQ = window.currentQuestionData || filteredQuestions[currentQuestion];
             const isCorrect = answer === currentQ.answer;
+            const earnedPoints = calculatePoints(currentQ.difficulty, timeLeft, isCorrect);
             
-            // Track category performance
-            categoryStats[currentQ.id] = isCorrect;
+            // Track category performance using original question id
+            const originalQ = filteredQuestions[currentQuestion];
+            categoryStats[originalQ.id] = isCorrect;
             
-            let earnedPoints = 0;
             if (isCorrect) {
-                const basePoints = currentQ.difficulty === 'easy' ? 10 : 
-                                 currentQ.difficulty === 'medium' ? 20 : 30;
-                const timeBonus = timeLeft > 60 ? 10 : timeLeft > 30 ? 5 : 0;
-                earnedPoints = basePoints + timeBonus;
+                const newScore = score + 1;
+                const newStreak = streak + 1;
+                const newPoints = points + earnedPoints;
                 
-                score++;
-                streak++;
-                bestStreak = Math.max(bestStreak, streak);
-                points += earnedPoints;
+                score = newScore;
+                streak = newStreak;
+                points = newPoints;
+                bestStreak = Math.max(bestStreak, newStreak);
                 
-                // Update level and experience
                 updateLevel(earnedPoints);
                 
                 // Check achievements
-                if (score === 1) checkAchievements('first_correct');
-                checkAchievements('streak', streak);
-                if (timeLeft > 110) checkAchievements('quick_answer');
-                checkAchievements('points', points);
+                if (newScore === 1) checkAchievements('first_correct');
+                checkAchievements('streak', newStreak);
+                if (timeLeft > 90) checkAchievements('quick_answer');
+                checkAchievements('points', newPoints);
                 checkAchievements('category_master');
-                
-                // Check for perfect score at the end
-                if (currentQuestion === questions.length - 1 && score === questions.length) {
-                    checkAchievements('perfect');
-                }
                 
                 showFeedback(true, earnedPoints, currentQ.explanation);
             } else {
@@ -959,6 +1472,11 @@
             
             highlightAnswers(answer, isCorrect);
             updateDisplays();
+            
+            // Check for perfect score
+            if (currentQuestion === filteredQuestions.length - 1 && isCorrect && score === filteredQuestions.length) {
+                checkAchievements('perfect');
+            }
         }
 
         function skipQuestion() {
@@ -968,7 +1486,10 @@
             gameActive = false;
             streak = 0;
             
-            const currentQ = questions[currentQuestion];
+            const currentQ = window.currentQuestionData || filteredQuestions[currentQuestion];
+            const originalQ = filteredQuestions[currentQuestion];
+            categoryStats[originalQ.id] = false;
+            
             showFeedback(false, 0, `Soalan dilangkau. Jawapan yang betul: ${currentQ.answer}. ${currentQ.explanation}`);
             highlightCorrectAnswer();
             updateDisplays();
@@ -978,22 +1499,23 @@
         function showFeedback(isCorrect, earnedPoints, explanation) {
             const feedbackEl = document.getElementById('feedback');
             feedbackEl.style.display = 'block';
-            feedbackEl.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+            feedbackEl.className = `feedback ${isCorrect ? 'correct' : 'wrong'} show`;
             
             const icon = isCorrect ? '✅' : '❌';
             const title = isCorrect ? `Betul! +${earnedPoints} mata!` : 'Tidak betul.';
+            const bonus = (isCorrect && timeLeft > 90) ? '<br><span style="color: #ff9800;">⚡ Bonus Pantas!</span>' : '';
             
             feedbackEl.innerHTML = `
                 <div class="feedback-header">
                     <span class="feedback-icon">${icon}</span>
-                    <span>${title}</span>
+                    <span>${title}${bonus}</span>
                 </div>
-                <div>${explanation}</div>
+                <div class="feedback-explanation">${explanation}</div>
             `;
             
             // Update action buttons
             const actionButtons = document.getElementById('actionButtons');
-            if (currentQuestion < questions.length - 1) {
+            if (currentQuestion < filteredQuestions.length - 1) {
                 actionButtons.innerHTML = '<button class="btn btn-primary" onclick="nextQuestion()">Seterusnya</button>';
             } else {
                 actionButtons.innerHTML = '<button class="btn btn-primary" onclick="showResults()">Selesai</button>';
@@ -1003,11 +1525,11 @@
         // Answer highlighting
         function highlightAnswers(selectedAnswer, isCorrect) {
             const options = document.querySelectorAll('.option-btn');
-            const currentQ = questions[currentQuestion];
+            const currentQ = window.currentQuestionData || filteredQuestions[currentQuestion];
             
-            options.forEach(btn => {
+            options.forEach((btn, index) => {
                 btn.disabled = true;
-                const optionText = btn.querySelector('.option-text').textContent;
+                const optionText = currentQ.options[index];
                 
                 if (optionText === currentQ.answer) {
                     btn.className = 'option-btn correct';
@@ -1021,11 +1543,11 @@
 
         function highlightCorrectAnswer() {
             const options = document.querySelectorAll('.option-btn');
-            const currentQ = questions[currentQuestion];
+            const currentQ = window.currentQuestionData || filteredQuestions[currentQuestion];
             
-            options.forEach(btn => {
+            options.forEach((btn, index) => {
                 btn.disabled = true;
-                const optionText = btn.querySelector('.option-text').textContent;
+                const optionText = currentQ.options[index];
                 
                 if (optionText === currentQ.answer) {
                     btn.className = 'option-btn correct';
@@ -1038,131 +1560,54 @@
         // Navigation
         function nextQuestion() {
             currentQuestion++;
-            if (currentQuestion < questions.length) {
-                loadQuestion();
-                startTimer();
-            } else {
-                showResults();
-            }
-        }
-
-        function loadQuestion() {
-            const currentQ = questions[currentQuestion];
-            
-            // Update question text
-            document.getElementById('questionText').innerHTML = currentQ.question;
-            
-            // Update badges
-            const difficultyText = {
-                'easy': 'Mudah',
-                'medium': 'Sederhana',
-                'hard': 'Sukar'
-            };
-            
-            const pointsText = {
-                'easy': '10',
-                'medium': '20',
-                'hard': '30'
-            };
-
-            const categoryText = {
-                'pictograph_reading': 'Membaca Piktograf',
-                'bar_chart_reading': 'Membaca Carta Palang',
-                'data_calculation': 'Pengiraan Data',
-                'percentage_from_data': 'Peratus dari Data',
-                'data_interpretation': 'Tafsiran Data',
-                'data_comparison': 'Perbandingan Data',
-                'pictograph_creation': 'Membina Piktograf',
-                'bar_chart_calculation': 'Pengiraan Carta Palang',
-                'pictograph_problem': 'Masalah Piktograf',
-                'bar_chart_problem': 'Masalah Carta Palang',
-                'data_collection_problem': 'Masalah Pengumpulan Data',
-                'stamp_collection_problem': 'Masalah Koleksi Setem',
-                'fishing_competition_problem': 'Masalah Pertandingan Memancing',
-                'student_performance_analysis': 'Analisis Prestasi Pelajar',
-                'sports_achievement_data': 'Data Pencapaian Sukan',
-                'library_data_analysis': 'Analisis Data Perpustakaan',
-                'school_canteen_survey': 'Tinjauan Kantin Sekolah',
-                'environmental_data_project': 'Projek Data Alam Sekitar'
-            };
-            
-            document.getElementById('difficultyBadge').textContent = difficultyText[currentQ.difficulty];
-            document.getElementById('difficultyBadge').className = `difficulty-badge difficulty-${currentQ.difficulty}`;
-            document.getElementById('pointsBadge').textContent = `${pointsText[currentQ.difficulty]} mata`;
-            document.getElementById('categoryBadge').textContent = categoryText[currentQ.category] || 'Pengurusan Data';
-            
-            // Load image if present
-            const imageContainer = document.getElementById('imageContainer');
-            if (currentQ.image) {
-                imageContainer.style.display = 'block';
-                imageContainer.innerHTML = `<div class="image-fallback">${currentQ.image.description}</div>`;
-            } else {
-                imageContainer.style.display = 'none';
-            }
-            
-            // Shuffle and load options
-            const shuffledOptions = [...currentQ.options].sort(() => Math.random() - 0.5);
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            shuffledOptions.forEach((option, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.onclick = () => selectAnswer(option);
-                btn.innerHTML = `
-                    <div class="option-label">Pilihan ${String.fromCharCode(65 + index)}</div>
-                    <div class="option-text">${option}</div>
-                `;
-                optionsContainer.appendChild(btn);
-            });
-            
-            // Reset feedback and buttons
-            document.getElementById('feedback').style.display = 'none';
-            document.getElementById('actionButtons').innerHTML = 
-                '<button class="btn btn-secondary" onclick="skipQuestion()">Langkau Soalan</button>';
-            
-            updateDisplays();
+            loadQuestion();
         }
 
         // Display updates
         function updateDisplays() {
-            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${questions.length}`;
+            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${filteredQuestions.length}`;
             document.getElementById('scoreDisplay').textContent = score;
             document.getElementById('pointsDisplay').textContent = points;
             document.getElementById('streakDisplay').textContent = streak;
             document.getElementById('levelDisplay').textContent = level;
             
-            const progressPercent = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressFill').style.width = `${progressPercent}%`;
-            document.getElementById('progressFill').textContent = `${Math.round(progressPercent)}%`;
+            const progressPercent = ((currentQuestion + 1) / filteredQuestions.length) * 100;
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = `${progressPercent}%`;
+            progressFill.textContent = `${Math.round(progressPercent)}%`;
+            
+            const expPercent = ((experience % 100) / 100) * 100;
+            const expFill = document.getElementById('expFill');
+            expFill.style.width = `${expPercent}%`;
+            document.getElementById('expLabel').textContent = `Pengalaman: ${experience} / ${level * 100}`;
         }
 
         // Results screen
         function showResults() {
-            const percentage = Math.round((score / questions.length) * 100);
-            let message = '';
+            const gameArea = document.getElementById('gameArea');
+            const percentage = Math.round((score / filteredQuestions.length) * 100);
             
-            if (percentage === 100) message = 'SEMPURNA! Pakar Pengurusan Data!';
-            else if (percentage >= 90) message = 'Cemerlang Sekali!';
-            else if (percentage >= 80) message = 'Cemerlang!';
-            else if (percentage >= 70) message = 'Bagus Sekali!';
-            else if (percentage >= 60) message = 'Bagus!';
-            else if (percentage >= 50) message = 'Boleh Tahan!';
-            else message = 'Cuba Lagi! Jangan Putus Asa!';
+            let message = '';
+            if (percentage === 100) message = 'SEMPURNA! Pakar Pengurusan Data! 📊👑';
+            else if (percentage >= 90) message = 'Cemerlang Sekali! 🌟🏆';
+            else if (percentage >= 80) message = 'Cemerlang! 🌟';
+            else if (percentage >= 70) message = 'Bagus Sekali! 👍✨';
+            else if (percentage >= 60) message = 'Bagus! 👍';
+            else if (percentage >= 50) message = 'Boleh Tahan! 💪';
+            else message = 'Cuba Lagi! Jangan Putus Asa! 🤗';
             
             let achievementsHTML = '';
             if (unlockedAchievements.length > 0) {
                 achievementsHTML = `
-                    <div style="margin-top: 30px; text-align: left;">
+                    <div class="achievements-section">
                         <h3>🏆 Pencapaian</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                        <div class="achievements-grid">
                             ${unlockedAchievements.map(id => {
                                 const achievement = achievementDefinitions.find(a => a.id === id);
                                 return achievement ? `
-                                    <div style="background: linear-gradient(135deg, #ff9800, #ffb74d); color: #e65100; padding: 15px; border-radius: 12px; text-align: center; border: 2px solid #ff9800;">
-                                        <div style="font-size: 2em; margin-bottom: 8px;">${achievement.icon}</div>
-                                        <div style="font-weight: bold; margin-bottom: 5px;">${achievement.name}</div>
-                                        <div style="font-size: 0.8em;">${achievement.description}</div>
+                                    <div class="achievement-badge">
+                                        <div class="achievement-icon">${achievement.icon}</div>
+                                        <div class="achievement-name">${achievement.name}</div>
                                     </div>
                                 ` : '';
                             }).join('')}
@@ -1171,27 +1616,27 @@
                 `;
             }
             
-            document.getElementById('gameArea').innerHTML = `
-                <div style="text-align: center; padding: 50px;">
-                    <div style="font-size: 5em; margin-bottom: 20px; animation: bounce 2s infinite;">🏆</div>
+            gameArea.innerHTML = `
+                <div class="complete-screen">
+                    <div class="trophy-animation">🏆</div>
                     <h2 style="color: #e65100; margin-bottom: 30px;">Tahniah!</h2>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 30px 0;">
-                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <div style="font-size: 2.5em; font-weight: bold; color: #e65100; margin-bottom: 5px;">${score}/${questions.length}</div>
-                            <div style="color: #666; font-size: 0.9em;">Soalan Betul</div>
+                    <div class="final-stats">
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #e65100;">${score}/${filteredQuestions.length}</div>
+                            <div class="final-stat-label">Soalan Betul</div>
                         </div>
-                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <div style="font-size: 2.5em; font-weight: bold; color: #4caf50; margin-bottom: 5px;">${points}</div>
-                            <div style="color: #666; font-size: 0.9em;">Mata Dikumpul</div>
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #4caf50;">${points}</div>
+                            <div class="final-stat-label">Mata Dikumpul</div>
                         </div>
-                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <div style="font-size: 2.5em; font-weight: bold; color: #ff9800; margin-bottom: 5px;">${bestStreak}</div>
-                            <div style="color: #666; font-size: 0.9em;">Berturut Terbaik</div>
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #ff9800;">${bestStreak}</div>
+                            <div class="final-stat-label">Berturut Terbaik</div>
                         </div>
-                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                            <div style="font-size: 2.5em; font-weight: bold; color: #ff5722; margin-bottom: 5px;">${level}</div>
-                            <div style="color: #666; font-size: 0.9em;">Tahap Dicapai</div>
+                        <div class="final-stat">
+                            <div class="final-stat-number" style="color: #ff8a50;">${level}</div>
+                            <div class="final-stat-label">Tahap Dicapai</div>
                         </div>
                     </div>
                     
@@ -1200,7 +1645,7 @@
                     
                     ${achievementsHTML}
                     
-                    <div style="margin-top: 40px;">
+                    <div class="action-buttons" style="margin-top: 40px;">
                         <button class="btn btn-primary" onclick="restartGame()" style="font-size: 1.2em; padding: 15px 30px; margin-right: 15px;">
                             🔄 Main Lagi
                         </button>
@@ -1220,30 +1665,23 @@
             score = 0;
             points = 0;
             streak = 0;
-            bestStreak = 0;
             level = 1;
             experience = 0;
             unlockedAchievements = [];
             categoryStats = {};
             
             document.getElementById('timerDisplay').style.display = 'block';
+            filteredQuestions = [...questions];
             loadQuestion();
-            startTimer();
         }
 
-        // Start the game
-        function startGame() {
-            startTimer();
-            updateDisplays();
-        }
-
-        // Navigation
+        // Navigation functions
         function goBack() {
             window.location.href = '../';
         }
 
-        // Start the game immediately
-        startGame();
+        // Initialize the game
+        initGame();
     </script>
 </body>
 </html>
