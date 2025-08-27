@@ -1,22 +1,25 @@
-Updated Complete Image Requirements:
-Questions 2, 3, 4, 6, 7, 10-20 now ALL have images allocated:
-Simple Chart Reading Questions:
+Complete Image Requirements List (17 images total)
+Questions 2-10 (Simple questions with images):
 
-Question 2: images/team-scores-comparison.png - Bar chart showing Team A (60) vs Team B (40)
-Question 3: images/star-points-pictograph.png - Pictograph with star symbols for Ali, Siti, Raj
-Question 4: images/fruit-preferences-chart.png - Bar chart showing fruit preferences (Apple: 4, Orange: 6, Banana: 2)
-Question 6: images/monthly-sales-bar-chart.png - Monthly sales data (Jan: 50, Feb: 75, Mar: 60)
-Question 7: images/school-comparison-pictograph.png - School enrollment pictograph
-Question 10: images/test-scores-bar-chart.png - Test scores for Ahmad, Fatimah, Kumar
+images/student-pictograph-symbols.png - Q2: Visual showing star symbols representing students, with calculation example of 24 students ÷ 4 per symbol
+images/mango-bar-chart.png - Q3: Simple bar chart showing mango quantity with 8-unit height bar and scale showing 5 fruits per unit
+images/vehicle-pictograph.png - Q4: Pictograph showing car symbols (4 cars) and motorcycle symbols (2 motorcycles) with legend showing 6 vehicles per symbol
+images/student-scores-bar-chart.png - Q5: Bar chart displaying three students' test scores - Ali (80), Siti (65), Ahmad (90)
+images/rose-flower-pictograph.png - Q6: Pictograph showing red roses (5 symbols) and white roses (3 symbols) with legend indicating 8 stems per symbol
+images/ice-cream-sales-chart.png - Q7: Bar chart showing ice cream sales by flavor - Vanilla (25), Chocolate (30), Strawberry (20)
+images/math-students-pictograph.png - Q8: Pictograph showing 20 student figures total with 4 highlighted as liking math (20% calculation visual)
+images/monthly-rainfall-chart.png - Q9: Bar chart showing rainfall data - January (120mm), February (80mm), March (150mm)
+images/chicken-pictograph-symbols.png - Q10: Pictograph showing 9 chicken symbols representing 36 total chickens, with half-symbol illustration
 
-Complex Problem-Solving Questions (11-20):
+Questions 11-20 (Complex word problems with images):
 
-Question 11: images/books-read-pictograph.png - Book reading data for 4 friends
-Question 12: images/quiz-scores-with-bonus.png - Quiz scores before/after bonus
-Question 13: images/sports-store-sales-chart.png - Ball sales data with pricing
-Question 15: images/fishing-competition-results.png - Fishing competition pictograph
-Question 16: images/student-quiz-analysis-table.png - Student performance analysis
-Question 17: images/sports-skills-assessment-chart.png - Sports skills evaluation chart
-Question 18: images/library-weekly-traffic.png - Weekly library visits
-Question 19: images/canteen-food-survey-results.png - School canteen food survey
-Question 20: images/water-usage-environmental-data.png - Environmental water usage data
+images/books-read-pictograph.png - Q11: Pictograph showing Sherry (4 book symbols), Qalisha (5 symbols), Swee Ping (4 symbols), Raveena (3 symbols)
+images/zariq-sports-skills.png - Q12: Bar chart showing Zariq's sports skills: Lontar (8), Sambut (10), Halang (7), Jaring (10), Lantun (empty)
+images/ball-sales-chart.png - Q13: Bar chart of monthly ball sales: Jan (10), Feb (16), Mar (12), Apr (10) with RM50 price label
+images/stamp-collection-data.png - Q14: Visual data showing stamp collections: Syahir (30), Francis (45), Rishi (35), Xin Feng (40)
+images/team-quiz-scores.png - Q15: Bar chart of team scores: Meranti (60), Jati (80), Seraya (70), Merbau (75)
+images/fishing-competition-pictograph.png - Q16: Pictograph with fish symbols: Sam (2), Adin (6), Tim (2), Ram (4), Ong (3)
+images/library-book-loans.png - Q17: Bar chart of library loans by subject: Math (150), Science (200), History (100), Language (250)
+images/weekly-temperature-chart.png - Q18: Temperature bar chart for 7 days: Mon(32°C), Tue(29°C), Wed(35°C), Thu(31°C), Fri(33°C), Sat(30°C), Sun(28°C)
+images/school-transport-survey.png - Q19: Pie chart/data showing transport modes: Bus (180), Car (120), Walking (60), Bicycle (40)
+images/fruit-sales-analysis.png - Q20: Table showing fruit sales with prices: Apple (45kg, RM8/kg), Orange (60kg, RM6/kg), Banana (80kg, RM4/kg), Grape (35kg, RM12/kg)
