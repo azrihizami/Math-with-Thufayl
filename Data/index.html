@@ -1068,15 +1068,18 @@
             {
                 id: 19,
                 category: 'school_transport_survey',
-                difficulty: 'hard',
-                question: 'Survei pengangkutan sekolah 400 pelajar: Bas (180), Kereta (120), Berjalan kaki (60), Basikal (40). a) Buat piktograf (1 simbol = 20 pelajar). b) Mod pengangkutan popular. c) Peratus naik bas.',
-                image: {
+                difficulty: 'medium',
+                question: 'Piktograf di bawah menunjukkan bancian cara pengankutan pelajar ke sekolah. Jawab soalan berikut:a) Buat piktograf (1 simbol = 20 pelajar). b) Mod pengangkutan popular. c) Peratus naik bas.',
+                subquestions: [
+                    'a) Apakah mod pengangkutan paling popular?',
+                    'b) Berapa peratus pelajar menaiki bas?',
+                ],image: {
                     src: 'images/school-transport-survey.png',
                     alt: 'Data pengangkutan pelajar ke sekolah',
                     description: 'Carta pai menunjukkan: Bas (180 pelajar), Kereta (120 pelajar), Berjalan kaki (60 pelajar), Basikal (40 pelajar) dari 400 pelajar'
                 },
-                answer: '9, 6, 3, 2 simbol; Bas; 45%',
-                options: ['8, 5, 4, 3 simbol; Kereta; 40%', '9, 6, 3, 2 simbol; Bas; 45%', '10, 7, 4, 2 simbol; Bas; 50%', '7, 5, 3, 2 simbol; Kereta; 35%'],
+                answer: 'Bas; 45%',
+                options: ['Kereta; 40%', 'Bas; 45%', 'Bas; 50%', 'Kereta; 35%'],
                 explanation: 'a) Bas:9, Kereta:6, Berjalan:3, Basikal:2 simbol. b) Bas paling popular. c) 180/400×100%=45%'
             },
             {
